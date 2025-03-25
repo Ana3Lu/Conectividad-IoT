@@ -20,8 +20,7 @@
 - [4. Implementación en Cisco Packet Tracer](#4-implementación-en-cisco-packet-tracer)
 - [5. Conclusión](#5-conclusión)
 - [6. Referencias](#6-referencias)
-- [7. Referencias](#7-referencias)
-- [8. Anexos](#8-anexos)
+- [7. Anexos](#7-anexos)
 
 ---
 
@@ -87,4 +86,8 @@ Otras opciones consideradas fueron HTTP y CoAP. Sin embargo, HTTP es demasiado p
 
 ---
 
-## 6. Anexos
+## 6. Referencias
+
+---
+
+## 7. Anexos
