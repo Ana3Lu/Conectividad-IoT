@@ -15,7 +15,7 @@
 
 ## Estructura de la Documentación
 - [1. Introducción](#1-introducción)
-- [2. Justificación del Proceso Seleccionado](#2-justificación-del-proceso-seleccionado)
+- [2. Justificación del Proceso Seleccionado](#2-motivación-y-justificación-del-proceso-seleccionado)
 - [3. Diseño del MVP y Tecnologías Seleccionadas](#3-diseño-del-mvp-y-tecnologías-seleccionadas)
 - [4. Implementación en Cisco Packet Tracer](#4-implementación-en-cisco-packet-tracer)
 - [5. Conclusión](#5-conclusión)
@@ -26,24 +26,28 @@
 
 ## 1. Introducción
 <p align="justify">
-En el desarrollo de una solución IoT para la empresa Vivero Plantaciones Ravelo, se ha seleccionado como proceso la automatización del riego, específicamente en la zona de cultivo y bandejas de plantas ornamentales. Este proceso es crucial para optimizar el uso del agua, mejorar la eficiencia operativa y garantizar el crecimiento óptimo de las plantas a través del monitoreo y control inteligente. 
+Actualmente, el Vivero Plantaciones Ravelo, ubicado en Chía, carece de automatización en el riego y cuidado de sus cultivos, lo que reduce su capacidad de respuesta ante cambios en temperatura, humedad y otras condiciones ambientales, lo que puede afectar la eficiencia operativa y el crecimiento óptimo de las plantas.
   
-Para la validación inicial, la conectividad de este MVP (Producto Mínimo Viable) se implementa en Cisco Packet Tracer, permitiendo simular y evaluar su funcionamiento antes de una posible implementación real.
+Para abordar esta problemática, se identificó la zona de cultivo en bandejas de plantas ornamentales dentro del invernadero como el área ideal para una solución basada en Internet de las Cosas (IoT). A diferencia de las plantas en bolsas de tierra, estas comparten sustrato, lo que facilita una distribución eficiente de sensores y una mejor gestión del riego.
+
+Como primer paso, se plantea desarrollar un Producto Mínimo Viable (MVP) centrado en la conectividad, asegurando que los sensores de temperatura ambiente, humedad del suelo y pH del sustrato transmitan datos de forma eficiente al sistema de control. El monitoreo automatizado de estas variables permite optimizar el uso del agua, mejorar el rendimiento de los cultivos y reducir el desperdicio de recursos, creando un entorno más eficiente y sostenible [1]. 
+
+Para validar la funcionalidad del sistema, se emplea Cisco Packet Tracer para simular la comunicación entre sensores y sistema antes de una posible implementación real, asegurando que la infraestructura propuesta sea efectiva en la optimización de recursos y la gestión del riego.
 </p>
 
 ---
 
-## 2. Justificación del Proceso Seleccionado
+## 2. Motivación y Justificación del Proceso Seleccionado
 <p align="justify">
-El riego automatizado en viveros es un desafío que requiere supervisión constante para evitar el desperdicio de agua y garantizar condiciones óptimas para el cultivo. Actualmente, este proceso se realiza manualmente, lo que limita la eficiencia y la precisión en el riego.
+El riego automatizado en viveros representa un desafío que exige un monitoreo constante para optimizar el uso del agua y asegurar condiciones óptimas de cultivo. Actualmente, este proceso se realiza manualmente en la empresa, lo que incrementa el riesgo de desperdicio de recursos y limita la eficiencia en la gestión del riego. La adopción de irrigación de precisión permite optimizar el uso del agua, reducir costos y mejorar la calidad del cultivo, beneficiando tanto al productor como al medioambiente [2].
 </p>
 
-En este conxto, la integración de una solución IoT trae beneficios como:
-- **Mayor eficiencia operativa:** Se minimiza la necesidad de intervención humana en el proceso de riego.
-- **Reducción del desperdicio de agua:** Se optimiza el consumo mediante riego automatizado basado en datos en tiempo real, activandose solo cuando sea necesario.
-- **Supervisión y control remoto:** Permite monitorear el sistema desde cualquier lugar.
+Para abordar esta problemática, la integración de una solución IoT ofrece ventajas significativas:
+- **Mayor eficiencia operativa:** Minimiza la intervención humana en el riego.
+- **Uso eficiente del agua:** Reduce desperdicios al activarse solo cuando sea necesario y evita el estrés hídrico en las plantas [2].
+- **Monitoreo y control remoto:** Permite supervisar las condiciones del cultivo en tiempo real desde cualquier ubicación.
 
-La implementación del MVP incluirá sensores para medir **humedad del suelo, temperatura ambiente y pH del sustrato**, datos clave para la automatización del riego.
+El MVP incorporará sensores de **humedad del suelo, temperatura ambiente y pH del sustrato**, variables clave para la automatización del riego y la optimización del cultivo.
 
 ---
 
@@ -51,54 +55,57 @@ La implementación del MVP incluirá sensores para medir **humedad del suelo, te
 
 ### Arquitectura del sistema
 <p align="justify">
-El MVP se basa en una arquitectura IoT híbrida distribuida que integra sensores, microcontroladores y actuadores conectados mediante Zigbee y Wi-Fi/Ethernet, gestionados a través del protocolo MQTT.
+El MVP se basa en una arquitectura IoT híbrida y distribuida, integrando sensores, microcontroladores y actuadores conectados mediante Zigbee y Wi-Fi/Ethernet, con gestión a través del protocolo MQTT. Se prioriza una combinación de tecnologías de comunicación para garantizar eficiencia energética, estabilidad de conexión y escalabilidad en el vivero. 
 </p>
 
 - **Componentes principales:**
   - **Sensores IoT:** Miden humedad del suelo, temperatura ambiente y pH del sustrato.
   - **Microcontroladores:** Procesan las mediciones y las envían a la Raspberry Pi vía Zigbee.
-  - **Raspberry Pi (Gateway IoT):** Reenvía los datos al servidor central usando Wi-Fi y MQTT.
-  - **Servidor Central:** Analiza la información y gestiona la activación del riego.
+  - **Raspberry Pi (Gateway IoT):** Coordina la red Zigbee y reenvía los datos al broker MQTT usando Wi-Fi o Ethernet.
+  - **Broker MQTT (Servidor de Mensajería):** Recibe y distribuye la información a los sistemas suscriptores.
+  - **Servidor Central:** Analiza la información recibida del broker MQTT y gestiona la activación del riego.
   - **Actuadores (válvulas de riego):** Se activan o desactivan automáticamente según los valores monitoreados.
 
 ### Tecnologías de Comunicación
 
 Se ha optado por una combinación de **Zigbee** y **Wi-Fi/Ethernet**, cada uno con un propósito específico:
 
-- **Zigbee:** Comunicación entre sensores y microcontroladores. **Ventajas:**
-  - Bajo consumo energético, permitiendo que los sensores funcionen por largos períodos sin necesidad de reemplazo frecuente de baterías.
-  - Capacidad de operar en una red de malla, mejorando cobertura y confiabilidad en el vivero, en el que la comunicación entre nodos no dependen de un único punto de acceso.
+- **Zigbee:** Comunicación entre sensores y microcontroladores. **Razones clave:**
+  - Bajo consumo energético, permitiendo que los sensores operen durante largos períodos sin necesidad de reemplazo frecuente de baterías.
+  - Capacidad de operar en una red de malla, mejorando cobertura en el vivero sin depender de un único punto de acceso.
   - Alta tolerancia a interferencias, al operar en la banda de 2.4 GHz con protocolos de corrección de errores.
     
-- **Wi-Fi/Ethernet:** Comunicación entre la Raspberry Pi y el servidor. **Ventajas:**
-  - Mayor ancho de banda para el envío eficiente y estable de datos.
-  - Integración con el broker MQTT para gestionar la comunicación de los datos provenientes de Zigbee.
-  - Facilita el control remoto del sistema sin necesidad de gateways adicionales.
+- **Wi-Fi/Ethernet:** Comunicación entre la Raspberry Pi y el servidor MQTT. **Razones clave:**
+  - **Wi-Fi** permite una conexión inalámbrica más flexible, útil en áreas del vivero donde no es factible el cableado.
+  - **Ethernet** proporciona una conexión más estable y rápida en zonas donde la señal Wi-Fi pueda ser débil o donde se requiera mayor ancho de banda.
+  - La Raspberry Pi no procesa los datos directamente, sino que los reenvía al broker MQTT, usando Wi-Fi o Ethernet según disponibilidad.
+  - Ambas tecnologías garantizan una comunicación eficiente con el broker MQTT.
 
-Otras opciones como Bluetooth, LoRa y redes móviles (4G/5G) fueron descartadas por consumo energético, costos asociados y requerimientos de transmisión de datos.
- 
+Otras alternativas como Bluetooth, LoRa y redes móviles (4G/5G) fueron descartadas debido a su menor alcance, consumo energético o costos asociados.
+
+### Protocolo de Comunicación
+
+El protocolo **MQTT (Message Queuing Telemetry Transport)** se utilizará para la comunicación entre la Raspberry Pi, el servidor y los clientes debido a las siguientes razones:
+- Protocolo ligero, ideal para dispositivos IoT con recursos limitados, permitiendo una comunicación eficiente
+- Opera con un modelo **publish-subscribe**, lo que permite que múltiples dispositivos (sensores, servidores, actuadores) intercambien datos sin conexiones directas.
+- Soporte para **QoS (Quality of Service)**, asegurando la entrega confiable de mensajes críticos como la activación del riego.
+- Bajo consumo de ancho de banda, ideal para redes con restricciones de conectividad.
+
+<p align="justify">
+Otras opciones consideradas fueron HTTP y CoAP. Sin embargo, por un lado HTTP es demasiado pesado para dispositivos IoT, mientras que CoAP, aunque puede llegar a ser eficiente, no ofrece la misma flexibilidad y compatibilidad con plataformas ya existentes.
+</p>
+
 ### Funcionamiento del MVP
 
 El sistema opera en tiempo real con el siguiente flujo:
 
 1. **Medición y transmisión:** Los sensores detectan humedad, temperatura y pH, mandando los datos al microcontrolador de cada mesa, el cual los envía a la Raspberry Pi mediante Zigbee.
-3. **Procesamiento y comunicación:** La Raspberry Pi actúa como gateway, publicando la información en el broker MQTT mediante Wi-Fi.
+3. **Procesamiento y comunicación:** La Raspberry Pi actúa como gateway, publicando la información en el broker MQTT mediante Wi-Fi o Ethernet.
 4. **Distribución y control:** A través de los temas específicos, se mandan los datos a los dispositivos suscriptores:
    - **Toma de decisiones:** El servidor central analiza los datos y activa/desactiva el riego según umbrales predefinidos.
    - **Supervisión remota:** Los encargados del vivero pueden monitorear las condiciones a través de una interfaz conectada al sistema.
   
 Este diseño permite optimizar el consumo de agua y mejorar la eficiencia del riego en el vivero, facilitando su gestión a través de una solución escalable y automatizada.
-
-### Protocolo de Comunicación
-
-El protocolo **MQTT (Message Queuing Telemetry Transport)** se utilizará para la comunicación entre la Raspberry Pi y el servidor debido a las siguientes razones:
-- Protocolo ligero, ideal para dispositivos IoT con recursos limitados.
-- Opera con un modelo **publish-subscribe**, que permite una comunicación eficiente sin sobrecargar la red.
-- Soporte para **QoS (Quality of Service)**, asegurando la entrega confiable de mensajes críticos como la activación del riego.
-
-<p align="justify">
-Otras opciones consideradas fueron HTTP y CoAP. Sin embargo, HTTP es demasiado pesado para dispositivos IoT, mientras que CoAP, aunque eficiente, no ofrece la misma flexibilidad y compatibilidad con plataformas ya existentes.
-</p>
 
 ---
 
@@ -106,7 +113,27 @@ Otras opciones consideradas fueron HTTP y CoAP. Sin embargo, HTTP es demasiado p
 
 ### 4.1. Configuración de la Simulación
 
-Dado que Cisco Packet Tracer no soporta Zigbee ni MQTT, se adaptó la implementación del diseño de la arquitectura IoT, llevándose a cabo los siguientes pasos:
+Para la implementación del diseño de la red IoT en Cisco Packet Tracer, fue necesario adaptar la arquitectura inicial debido a la falta de soporte para tecnologías como Zigbee y MQTT. Como alternativa:
+- Se empleó Wi-Fi para la comunicación entre sensores y la Raspberry Pi.
+- Se sustituyó MQTT por HTTP como protocolo de transmisión de datos.
+- Se configuró un servidor HTTP para almacenar y procesar las lecturas de sensores simuladas.
+
+La selección de los componentes se basó en su compatibilidad con Cisco Packet Tracer y su capacidad de replicar el flujo de información esperado en la red IoT.
+
+A continuación, se presentan los componentes utilizados y su función en la simulación:
+
+| *Componente*              | *Dispositivo en Packet Tracer*          | *Función* |
+|-----------------------------|---------------------------------|------------|
+| *Sensores IoT*  | *IoT Temperature, IoT Humidity* | Miden condiciones del ambiente y del suelo. |
+| *Microcontrolador local (ESP32/Arduino)* | *IoT Microcontroller* | Recibe los datos de los sensores y los transmite a la Raspberry Pi. |
+| *Coordinador/Gateway (Raspberry Pi)* | *Single Board Computer (SBC)* | Recibe datos de los microcontroladores y los envía al servidor. |
+| *Servidor/Dashboard* | *Server con Web Server activado* | Procesa y muestra los datos del vivero. |
+| *Red Wi-Fi* | *Home Gateway (Router Wi-Fi)* | Conecta todos los dispositivos a la red. |
+| *Actuadores (Aspersores)* | *IoT Water Sprinkler* | Se activa según condiciones del ambiente. |
+
+Con esta configuración, se logró simular la comunicación entre sensores, microcontroladores y el servidor a través de Wi-Fi y HTTP.
+
+#### Pasos de Implementación:
 1. **Configuración de la Red Wi-Fi:**
     - Se añadió un ***Home Gateway*** como punto de acceso Wi-Fi para los dispositivos IoT.
     - Se conectó un switch opcional para permitir conexiones cableadas.
@@ -130,15 +157,17 @@ Dado que Cisco Packet Tracer no soporta Zigbee ni MQTT, se adaptó la implementa
 
 Para validar el correcto funcionamiento de la simulación en Cisco Packet Tracer, se realizaron las siguientes pruebas:
 - **Verificación de Conectividad:**
-    - Se comprobó que los sensores enviaban datos al microcontrolador.
+    - Se comprobó que los sensores enviaban datos al microcontrolador usando Wi-Fi.
     - Se verificó que la Raspberry Pi recibía datos y los enviaba al servidor mediante HTTP.
     - Se utilizó un navegador web en la Raspberry Pi para acceder a la interfaz del servidor.
 
-- **Pruebas de Control de Actuadores:**
-    - Se activaron los actuadores desde la página web del servidor.
-    - Se verificó la respuesta de los dispositivos al recibir comandos de activación/desactivación.
+- **Pruebas de Control del Actuador:**
+    - Se activó el actuador desde la página web del servidor.
+    - Se verificó la respuesta del dispositivo aspersor al recibir comandos de activación/desactivación.
 
-- **Desafíos y Soluciones:**
+Esta fase aseguró que los principios básicos de la automatización del riego sean funcionales en una implementación real con MQTT y Zigbee.
+
+#### Desafíos y Soluciones:
 <p align="justify">
 Para la simulación en Cisco Packet Tracer, inicialmente se encontró el problema de que no hay soporte para tecnologías como Zigbee ni MQTT. Por tanto, como alternativas se usaron únicamente Wi-Fi y HTTP para la comunicación. 
 
@@ -150,6 +179,9 @@ Para la simulación en Cisco Packet Tracer, inicialmente se encontró el problem
 ---
 
 ## 6. Referencias
+
+[1] Tecnología y Proyectos Controla, “Conectividad Agroindustrial,” *Tecnologías Controla*, n.d. [Online]. Disponible en: [https://www.tecnologiascontrola.com.mx/servicios/conectividad-agroindustrial/](https://www.tecnologiascontrola.com.mx/servicios/conectividad-agroindustrial/). [Accedido: 27-mar-2025]. 
+[2] Entel Digital, “Gestión de sistema de riego de precisión de aguas y sus beneficios,” *e digital*, 2 de abril de 2024. [Online]. Disponible en: [https://enteldigital.cl/blog/gestion-de-sistema-de-riego-de-precision-de-aguas-y-sus-beneficios](https://enteldigital.cl/blog/gestion-de-sistema-de-riego-de-precision-de-aguas-y-sus-beneficios). [Accedido: 27-mar-2025]. 
 
 ---
 
