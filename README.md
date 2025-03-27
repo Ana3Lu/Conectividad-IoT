@@ -56,9 +56,9 @@ El MVP se basa en una arquitectura IoT híbrida distribuida que integra sensores
 
 - **Componentes principales:**
   - **Sensores IoT:** Miden humedad del suelo, temperatura ambiente y pH del sustrato.
-  - **Microcontroladores:** Reciben datos de los sensores y los envían a la Raspberry Pi mediante Zigbee.
-  - **Raspberry Pi (Gateway IoT):** Procesa y reenvía los datos al servidor central usando Wi-Fi y MQTT.
-  - **Servidor Central:** Almacena y analiza los datos para la gestión automatizada del riego.
+  - **Microcontroladores:** Procesan las mediciones y las envían a la Raspberry Pi vía Zigbee.
+  - **Raspberry Pi (Gateway IoT):** Reenvía los datos al servidor central usando Wi-Fi y MQTT.
+  - **Servidor Central:** Analiza la información y gestiona la activación del riego.
   - **Actuadores (válvulas de riego):** Se activan o desactivan automáticamente según los valores monitoreados.
 
 ### Tecnologías de Comunicación
@@ -79,13 +79,13 @@ Otras opciones como Bluetooth, LoRa y redes móviles (4G/5G) fueron descartadas 
  
 ### Funcionamiento del MVP
 
-El sistema opera en tiempo real mediante el siguiente flujo:
-1. **Medición:** Los sensores detectan humedad, temperatura y pH, mandando los datos al microcontrolador de cada mesa.
-2. **Transmisión:** El microcontrolador envían los datos a la Raspberry Pi mediante Zigbee.
-3. **Procesamiento:** La Raspberry Pi actúa como gateway, analizando la información recibida y publicándola en el broker MQTT mediante Wi-Fi.
-4. **Distribución y acción:** El broker MQTT, a través de temas específicos, envía los datos a los dispositivos suscriptores:
-   - **Toma de decisiones:** El servidor evalúa los datos y activa/desactiva el riego según umbrales predefinidos.
-   - **Supervisión remota:** Los encargados del vivero pueden monitorear las condiciones desde una interfaz conectada al sistema.
+El sistema opera en tiempo real con el siguiente flujo:
+
+1. **Medición y transmisión:** Los sensores detectan humedad, temperatura y pH, mandando los datos al microcontrolador de cada mesa, el cual los envía a la Raspberry Pi mediante Zigbee.
+3. **Procesamiento y comunicación:** La Raspberry Pi actúa como gateway, publicando la información en el broker MQTT mediante Wi-Fi.
+4. **Distribución y control:** A través de los temas específicos, se mandan los datos a los dispositivos suscriptores:
+   - **Toma de decisiones:** El servidor central analiza los datos y activa/desactiva el riego según umbrales predefinidos.
+   - **Supervisión remota:** Los encargados del vivero pueden monitorear las condiciones a través de una interfaz conectada al sistema.
   
 Este diseño permite optimizar el consumo de agua y mejorar la eficiencia del riego en el vivero, facilitando su gestión a través de una solución escalable y automatizada.
 
