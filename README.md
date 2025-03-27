@@ -71,9 +71,12 @@ El MVP se basa en una arquitectura IoT híbrida y distribuida, integrando sensor
 Se ha optado por una combinación de **Zigbee** y **Wi-Fi/Ethernet**, cada uno con un propósito específico:
 
 - **Zigbee:** Comunicación entre sensores y microcontroladores. **Razones clave:**
-  - Bajo consumo energético, permitiendo que los sensores operen durante largos períodos sin necesidad de reemplazo frecuente de baterías.
-  - Capacidad de operar en una red de malla, mejorando cobertura en el vivero sin depender de un único punto de acceso.
-  - Alta tolerancia a interferencias, al operar en la banda de 2.4 GHz con protocolos de corrección de errores.
+  - Bajo consumo energético, lo que permite que los sensores operen por largos períodos sin reemplazo frecuente de baterías.
+  - Topología de red mallada, que permite la comunicación entre dispositivos sin depender de un único punto de acceso, mejorando la cobertura en el vivero y asegurando tolerancia a fallos [4].
+  - Alta confiabilidad en la transmisión de datos, al emplear reintentos de paquetes y corrección de errores para garantizar una comunicación precisa, incluso en entornos con interferencias [4].
+  - Uso de técnicas de mitigación de interferencias, como el salto de frecuencia en la banda de 2.4 GHz, 868 MHz o 915 MHz, lo que mejora la estabilidad en la comunicación y evita colisiones con otros dispositivos inalámbricos [4].
+- Seguridad integrada, con medidas de cifrado y autenticación que protegen los datos transmitidos frente a accesos no autorizados [4].
+- Optimizado para aplicaciones de monitoreo, dado que ZigBee opera a bajas velocidades de transmisión, lo que es suficiente para el intercambio eficiente de datos de sensores sin consumir ancho de banda innecesario [4].
     
 - **Wi-Fi/Ethernet:** Comunicación entre la Raspberry Pi y el servidor MQTT. **Razones clave:**
   - **Wi-Fi** permite una conexión inalámbrica más flexible, útil en áreas del vivero donde no es factible el cableado.
@@ -81,7 +84,7 @@ Se ha optado por una combinación de **Zigbee** y **Wi-Fi/Ethernet**, cada uno c
   - La Raspberry Pi no procesa los datos directamente, sino que los reenvía al broker MQTT, usando Wi-Fi o Ethernet según disponibilidad.
   - Ambas tecnologías garantizan una comunicación eficiente con el broker MQTT.
 
-Otras alternativas como Bluetooth, LoRa y redes móviles (4G/5G) fueron descartadas debido a su menor alcance, consumo energético o costos asociados.
+Otras alternativas como Bluetooth Low Energy (BLE), LoRa y redes móviles (4G/5G) fueron descartadas debido a su menor alcance, consumo energético o costos asociados, por más de que algunas son capaces de alcanzar mayores velocidades de transmisión (como en el caso de BLE) [3].
 
 ### Protocolo de Comunicación
 
@@ -181,7 +184,13 @@ Para la simulación en Cisco Packet Tracer, inicialmente se encontró el problem
 ## 6. Referencias
 
 [1] Tecnología y Proyectos Controla, “Conectividad Agroindustrial,” *Tecnologías Controla*, n.d. [Online]. Disponible en: [https://www.tecnologiascontrola.com.mx/servicios/conectividad-agroindustrial/](https://www.tecnologiascontrola.com.mx/servicios/conectividad-agroindustrial/). [Accedido: 27-mar-2025]. 
+
 [2] Entel Digital, “Gestión de sistema de riego de precisión de aguas y sus beneficios,” *e digital*, 2 de abril de 2024. [Online]. Disponible en: [https://enteldigital.cl/blog/gestion-de-sistema-de-riego-de-precision-de-aguas-y-sus-beneficios](https://enteldigital.cl/blog/gestion-de-sistema-de-riego-de-precision-de-aguas-y-sus-beneficios). [Accedido: 27-mar-2025]. 
+
+[3] Venco, “Qué es ZigBee, cómo funciona y características principales,” *Venco*, 3 de diciembre de 2020. [Online]. Disponible en:  [https://www.vencoel.com/que-es-zigbee-como-funciona-y-caracteristicas-principales/](https://www.vencoel.com/que-es-zigbee-como-funciona-y-caracteristicas-principales/). [Accedido: 27-mar-2025].
+
+[4] Abiertaugr,  “Zigbee,” *Abiertaugr*, n. d. [Online]. Disponible en:  [https://abierta.ugr.es/pluginfile.php/76391/mod_resource/content/2/9_zigbee.html](https://abierta.ugr.es/pluginfile.php/76391/mod_resource/content/2/9_zigbee.html). [Accedido: 27-mar-2025].
+
 
 ---
 
