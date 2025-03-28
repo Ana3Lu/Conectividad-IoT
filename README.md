@@ -26,28 +26,36 @@
 
 ## 1. Introducción
 <p align="justify">
-Actualmente, el Vivero Plantaciones Ravelo, ubicado en Chía, carece de automatización en el riego y cuidado de sus cultivos, lo que reduce su capacidad de respuesta ante cambios en temperatura, humedad y otras condiciones ambientales, lo que puede afectar la eficiencia operativa y el crecimiento óptimo de las plantas.
-  
-Para abordar esta problemática, se identificó la zona de cultivo en bandejas de plantas ornamentales dentro del invernadero como el área ideal para una solución basada en Internet de las Cosas (IoT). A diferencia de las plantas en bolsas de tierra, estas comparten sustrato, lo que facilita una distribución eficiente de sensores y una mejor gestión del riego.
+Actualmente, el Vivero Plantaciones Ravelo, ubicado en Chía, no cuenta con un sistema automatizado para el riego y cuidado de sus cultivos, lo que limita su capacidad de respuesta ante cambios en temperatura, humedad y otras condiciones ambientales, lo que puede afectar la eficiencia operativa y el crecimiento óptimo de las plantas.
+</p>
 
-Como primer paso, se plantea desarrollar un Producto Mínimo Viable (MVP) centrado en la conectividad, asegurando que los sensores de temperatura ambiente, humedad del suelo y pH del sustrato transmitan datos de forma eficiente al sistema de control. El monitoreo automatizado de estas variables permite optimizar el uso del agua, mejorar el rendimiento de los cultivos y reducir el desperdicio de recursos, creando un entorno más eficiente y sostenible [1]. 
+<p align="justify">
+Para abordar esta problemática, se identificó la zona de cultivo en bandejas de plantas ornamentales dentro del invernadero como el área ideal para implementar una solución basada en Internet de las Cosas (IoT). A diferencia de las plantas en bolsas de tierra, las bandejas comparten sustrato, lo que facilita una distribución eficiente de sensores y una mejor gestión del riego.
+</p>
 
-Para validar la funcionalidad del sistema, se emplea Cisco Packet Tracer para simular la comunicación entre sensores y sistema antes de una posible implementación real, asegurando que la infraestructura propuesta sea efectiva en la optimización de recursos y la gestión del riego.
+<p align="justify">
+Como primer paso, se plantea desarrollar un Producto Mínimo Viable (MVP) enfocado en la conectividad, asegurando que los sensores de temperatura ambiente, humedad del suelo y pH del sustrato transmitan datos de forma eficiente al sistema de control. El monitoreo automatizado de estas variables permitirá optimizar el uso del agua, mejorar el rendimiento de los cultivos y reducir el desperdicio de recursos, generando un entorno más eficiente y sostenible [1]. 
+</p>
+
+<p align="justify">
+Para validar la funcionalidad del sistema, se utilizará Cisco Packet Tracer  como herramienta de simulación para comprobar la comunicación entre sensores y sistema de control antes de una posible implementación real, asegurando que la infraestructura propuesta sea efectiva en la optimización de recursos y la gestión del riego.
 </p>
 
 ---
 
 ## 2. Motivación y Justificación del Proceso Seleccionado
 <p align="justify">
-El riego automatizado en viveros representa un desafío que exige un monitoreo constante para optimizar el uso del agua y asegurar condiciones óptimas de cultivo. Actualmente, este proceso se realiza manualmente en la empresa, lo que incrementa el riesgo de desperdicio de recursos y limita la eficiencia en la gestión del riego. La adopción de irrigación de precisión permite optimizar el uso del agua, reducir costos y mejorar la calidad del cultivo, beneficiando tanto al productor como al medioambiente [2].
+ La automatización del riego en viveros representa un desafío que requiere un monitoreo constante para optimizar el uso del agua y garantizar condiciones óptimas para el desarrollo de los cultivos. Actualmente, este proceso se realiza de forma manual en la empresa, lo que incrementa el riesgo de desperdicio de recursos y limita la eficiencia en la gestión del riego. La implementación de sistemas de irrigación de precisión permite optimizar el consumo de agua, reducir costos operativos y mejorar la calidad de los cultivos, generando beneficios tanto para el productor como para el medioambiente [2].
 </p>
 
-Para abordar esta problemática, la integración de una solución IoT ofrece ventajas significativas:
-- **Mayor eficiencia operativa:** Minimiza la intervención humana en el riego.
-- **Uso eficiente del agua:** Reduce desperdicios al activarse solo cuando sea necesario y evita el estrés hídrico en las plantas [2].
-- **Monitoreo y control remoto:** Permite supervisar las condiciones del cultivo en tiempo real desde cualquier ubicación.
+Para abordar esta problemática, la integración de una solución basada en Internet de las Cosas (IoT) ofrece ventajas significativas:
+- **Mayor eficiencia operativa:** Reduce la intervención humana en el proceso de riego.
+- **Uso eficiente del agua:** Evita desperdicios al activar el sistema solo cuando sea necesario y previene el estrés hídrico en las plantas [2].
+- **Monitoreo y control remoto:** Permite supervisar en tiempo real las condiciones del cultivo desde cualquier ubicación.
 
-El MVP incorporará sensores de **humedad del suelo, temperatura ambiente y pH del sustrato**, variables clave para la automatización del riego y la optimización del cultivo.
+<p align="justify">
+El Producto Mínimo Viable (MVP) incorporará sensores de **humedad del suelo, temperatura ambiente y pH del sustrato**, variables clave para la automatización del riego y la optimización del cultivo.
+</p>
 
 ---
 
@@ -55,18 +63,25 @@ El MVP incorporará sensores de **humedad del suelo, temperatura ambiente y pH d
 
 ### Arquitectura del sistema
 <p align="justify">
-El MVP se basa en una arquitectura IoT híbrida y distribuida, integrando sensores, microcontroladores y actuadores conectados mediante Zigbee y Wi-Fi/Ethernet, con gestión a través del protocolo MQTT. Se prioriza una combinación de tecnologías de comunicación para garantizar eficiencia energética, estabilidad de conexión y escalabilidad en el vivero. 
+El Producto Mínimo Viable (MVP) propuesto se basa en una arquitectura IoT híbrida y distribuida, estructurada según los componentes fundamentales de un sistema IoT: percepción, computación, conectividad y analítica/visualización. Esta arquitectura integra sensores, microcontroladores, una Raspberry Pi como gateway, un servidor MQTT, actuadores y una interfaz de usuario. Se seleccionó una combinación de tecnologías Zigbee y Wi-Fi/Ethernet para asegurar eficiencia energética, escalabilidad, estabilidad en la transmisión de datos y facilidad de mantenimiento dentro del vivero.  
 </p>
 
-- **Componentes principales:**
-  - **Sensores IoT:** Miden humedad del suelo, temperatura ambiente y pH del sustrato.
-  - **Microcontroladores:** Procesan las mediciones y las envían a la Raspberry Pi vía Zigbee.
-  - **Raspberry Pi:**
-      - Actúa como **gateway IoT**, recibiendo datos de los microcontroladores vía Zigbee.
-      - funciona como el **broker MQTT**, gestionando la distribución de los datos a sistemas suscriptores. En este caso, los encargados del vivero pueden conectarse al broker MQTT para visualizar los datos en tiempo real mediante una interfaz cliente.
-      - Se conecta a la red Wi-Fi para transmitir los datos al broker MQTT y permitir acceso a los usuarios.
-      - Ejecuta la lógica de decisión para la activación del riego según umbrales predefinidos.
-  - **Actuadores (válvulas de riego y ventiladores):** Se activan o desactivan automáticamente según los valores monitoreados.
+### Componentes principales
+#### 1. Percepción
+  - **Sensores IoT:** Los sensores de humedad del suelo, temperatura ambiente y pH del sustrato están conectados mediante protocolos I2C o SPI, y se encargan de recolectar datos del entorno físico en las bandejas de cultivo ornamental. Estas bandejas comparten un mismo sustrato, lo que facilita un monitoreo colectivo más eficiente y preciso de las condiciones del cultivo.
+  - **Actuadores (válvulas de riego y ventiladores):** Ejecutan acciones físicas en función de las decisiones tomadas por el sistema. Las válvulas controlan el paso de agua y soluciones ácidas o alcalinas hacia el cultivo, mientras que el ventilador se activa para regular la temperatura cuando se superan ciertos umbrales definidos. Ambos actuadores reciben señales digitales desde el microcontrolador, respondiendo de forma automatizada a las condiciones monitoreadas por los sensores, lo que permite una gestión eficiente y precisa del ambiente dentro del vivero.
+
+#### 2. Computación
+  - **Microcontroladores (MCU):** Procesan los datos recibidos desde los sensores y los transmiten a la Raspberry Pi utilizando Zigbee. Estos dispositivos funcionan como sistemas embebidos de bajo consumo, lo que los hace ideales para el monitoreo distribuido en zonas alejadas del vivero.
+  - **Raspberry Pi (Gateway IoT):** Coordina la red Zigbee local, gestionando la comunicación entre los microcontroladores distribuidos. A su vez, se encarga de reenviar los datos recopilados hacia el broker MQTT utilizando conexión Wi-Fi o Ethernet, según la disponibilidad y estabilidad de la red. Además, tiene la capacidad de ejecutar software ligero para realizar tareas de preprocesamiento de datos o verificación de conectividad local, aprovechando los principios de la computación en el borde (Edge Computing).
+
+#### 3. Conectividad
+  - **Red Zigbee:** Conecta los sensores y microcontroladores dentro del sistema, proporcionando baja latencia, consumo energético reducido y alta confiabilidad incluso en entornos con interferencias. Su topología mallada y el uso de bandas de frecuencia como 2.4 GHz, 868 MHz o 915 MHz permiten una cobertura extendida y estable en todo el vivero [4].
+  - **Wi-Fi / Ethernet (conectividad del gateway):** Son seleccionadas según las condiciones del entorno. Wi-Fi se utiliza en zonas donde no es viable realizar cableado, ofreciendo mayor flexibilidad de instalación, mientras que Ethernet es preferida en áreas con señal inalámbrica débil, ya que proporciona una conexión más estable y de mayor velocidad. Ambas tecnologías permiten la transmisión eficiente de datos hacia el broker MQTT a través de la red necesario en nuestra arquitectura.
+
+#### 4. Analítica y Visualización
+  - **Servidor Central:** Recibe los datos desde el broker MQTT, analiza las variables monitoreadas y ejecuta reglas de negocio para activar o desactivar las válvulas de riego. Además, almacena datos históricos que permiten su posterior visualización y facilitan la toma de decisiones informadas.
+  - **Interfaz Web / Dashboard:** Permite al observador remoto, es decir, al personal del vivero, monitorear en tiempo real el estado del sistema, accediendo a la visualización de datos, alertas, umbrales y estadísticas clave para una gestión eficiente del riego y las condiciones del cultivo.
 
 ### Tecnologías de Comunicación
 
