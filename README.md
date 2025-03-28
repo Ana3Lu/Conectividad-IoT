@@ -75,8 +75,8 @@ Se ha optado por una combinación de **Zigbee** y **Wi-Fi/Ethernet**, cada uno c
   - Topología de red mallada, que permite la comunicación entre dispositivos sin depender de un único punto de acceso, mejorando la cobertura en el vivero y asegurando tolerancia a fallos [4].
   - Alta confiabilidad en la transmisión de datos, al emplear reintentos de paquetes y corrección de errores para garantizar una comunicación precisa, incluso en entornos con interferencias [4].
   - Uso de técnicas de mitigación de interferencias, como el salto de frecuencia en la banda de 2.4 GHz, 868 MHz o 915 MHz, lo que mejora la estabilidad en la comunicación y evita colisiones con otros dispositivos inalámbricos [4].
-- Seguridad integrada, con medidas de cifrado y autenticación que protegen los datos transmitidos frente a accesos no autorizados [4].
-- Optimizado para aplicaciones de monitoreo, dado que ZigBee opera a bajas velocidades de transmisión, lo que es suficiente para el intercambio eficiente de datos de sensores sin consumir ancho de banda innecesario [4].
+  - Seguridad integrada, con medidas de cifrado y autenticación que protegen los datos transmitidos frente a accesos no autorizados [4].
+  - Optimizado para aplicaciones de monitoreo, dado que ZigBee opera a bajas velocidades de transmisión, lo que es suficiente para el intercambio eficiente de datos de sensores sin consumir ancho de banda innecesario [4].
     
 - **Wi-Fi/Ethernet:** Comunicación entre la Raspberry Pi y el servidor MQTT. **Razones clave:**
   - **Wi-Fi** permite una conexión inalámbrica más flexible, útil en áreas del vivero donde no es factible el cableado.
@@ -88,11 +88,12 @@ Otras alternativas como Bluetooth Low Energy (BLE), LoRa y redes móviles (4G/5G
 
 ### Protocolo de Comunicación
 
-El protocolo **MQTT (Message Queuing Telemetry Transport)** se utilizará para la comunicación entre la Raspberry Pi, el servidor y los clientes debido a las siguientes razones:
-- Protocolo ligero, ideal para dispositivos IoT con recursos limitados, permitiendo una comunicación eficiente
-- Opera con un modelo **publish-subscribe**, lo que permite que múltiples dispositivos (sensores, servidores, actuadores) intercambien datos sin conexiones directas.
-- Soporte para **QoS (Quality of Service)**, asegurando la entrega confiable de mensajes críticos como la activación del riego.
-- Bajo consumo de ancho de banda, ideal para redes con restricciones de conectividad.
+El protocolo **MQTT (Message Queuing Telemetry Transport)** se utilizará para la comunicación entre la Raspberry Pi, el servidor y los clientes, debido a sus ventajas en entornos IoT:
+- Protocolo ligero, optimizado para dispositivos con recursos limitados, lo que permite una comunicación eficiente y un bajo consumo energético.
+- Eficiencia en el uso del ancho de banda, ya que está diseñado para transmitir mensajes cortos y comandos, lo que lo hace ideal para redes con restricciones de conectividad [5].
+- **Modelo publish-subscribe**, que facilita el intercambio de datos entre múltiples dispositivos (sensores, servidores, actuadores) sin necesidad de conexiones directas [5].
+- Soporte para **QoS (Quality of Service)**, garantizando la entrega confiable de mensajes críticos, como la activación del riego.
+- Facilidad de implementación en dispositivos como Raspberry Pi y ESP8266, ya que aprovecha los adaptadores Wi-Fi integrados para la conexión sin necesidad de hardware adicional ni cableado complejo [5].
 
 <p align="justify">
 Otras opciones consideradas fueron HTTP y CoAP. Sin embargo, por un lado HTTP es demasiado pesado para dispositivos IoT, mientras que CoAP, aunque puede llegar a ser eficiente, no ofrece la misma flexibilidad y compatibilidad con plataformas ya existentes.
@@ -191,6 +192,7 @@ Para la simulación en Cisco Packet Tracer, inicialmente se encontró el problem
 
 [4] Abiertaugr,  “Zigbee,” *Abiertaugr*, n. d. [Online]. Disponible en:  [https://abierta.ugr.es/pluginfile.php/76391/mod_resource/content/2/9_zigbee.html](https://abierta.ugr.es/pluginfile.php/76391/mod_resource/content/2/9_zigbee.html). [Accedido: 27-mar-2025].
 
+[5] Tutorials for Raspberry Pi,  “Wireless communication between Raspberry Pi’s via MQTT broker/client,” *Tutorials for Raspberry Pi*, n. d. [Online]. Disponible en:  [https://tutorials-raspberrypi.com/raspberry-pi-mqtt-broker-client-wireless-communication/](https://tutorials-raspberrypi.com/raspberry-pi-mqtt-broker-client-wireless-communication/). [Accedido: 27-mar-2025].
 
 ---
 
