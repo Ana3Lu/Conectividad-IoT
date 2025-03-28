@@ -61,16 +61,18 @@ El MVP se basa en una arquitectura IoT híbrida y distribuida, integrando sensor
 - **Componentes principales:**
   - **Sensores IoT:** Miden humedad del suelo, temperatura ambiente y pH del sustrato.
   - **Microcontroladores:** Procesan las mediciones y las envían a la Raspberry Pi vía Zigbee.
-  - **Raspberry Pi (Gateway IoT):** Coordina la red Zigbee y reenvía los datos al broker MQTT usando Wi-Fi o Ethernet.
-  - **Broker MQTT (Servidor de Mensajería):** Recibe y distribuye la información a los sistemas suscriptores.
-  - **Servidor Central:** Analiza la información recibida del broker MQTT y gestiona la activación del riego.
-  - **Actuadores (válvulas de riego):** Se activan o desactivan automáticamente según los valores monitoreados.
+  - **Raspberry Pi:**
+      - Actúa como **gateway IoT**, recibiendo datos de los microcontroladores vía Zigbee.
+      - funciona como el **broker MQTT**, gestionando la distribución de los datos a sistemas suscriptores. En este caso, los encargados del vivero pueden conectarse al broker MQTT para visualizar los datos en tiempo real mediante una interfaz cliente.
+      - Se conecta a la red Wi-Fi para transmitir los datos al broker MQTT y permitir acceso a los usuarios.
+      - Ejecuta la lógica de decisión para la activación del riego según umbrales predefinidos.
+  - **Actuadores (válvulas de riego y ventiladores):** Se activan o desactivan automáticamente según los valores monitoreados.
 
 ### Tecnologías de Comunicación
 
 Se ha optado por una combinación de **Zigbee** y **Wi-Fi/Ethernet**, cada uno con un propósito específico:
 
-- **Zigbee:** Comunicación entre sensores y microcontroladores. **Razones clave:**
+- **Zigbee:** Comunicación entre sensores, microcontroladores y la Raspberry Pi. **Razones clave:**
   - Bajo consumo energético, lo que permite que los sensores operen por largos períodos sin reemplazo frecuente de baterías.
   - Topología de red mallada, que permite la comunicación entre dispositivos sin depender de un único punto de acceso, mejorando la cobertura en el vivero y asegurando tolerancia a fallos [4].
   - Alta confiabilidad en la transmisión de datos, al emplear reintentos de paquetes y corrección de errores para garantizar una comunicación precisa, incluso en entornos con interferencias [4].
@@ -78,23 +80,22 @@ Se ha optado por una combinación de **Zigbee** y **Wi-Fi/Ethernet**, cada uno c
   - Seguridad integrada, con medidas de cifrado y autenticación que protegen los datos transmitidos frente a accesos no autorizados [4].
   - Optimizado para aplicaciones de monitoreo, dado que ZigBee opera a bajas velocidades de transmisión, lo que es suficiente para el intercambio eficiente de datos de sensores sin consumir ancho de banda innecesario [4].
     
-- **Wi-Fi/Ethernet:** Comunicación entre la Raspberry Pi y el servidor MQTT. **Razones clave:**
-  - **Wi-Fi** permite una conexión inalámbrica más flexible, útil en áreas del vivero donde no es factible el cableado.
-  - **Ethernet** proporciona una conexión más estable y rápida en zonas donde la señal Wi-Fi pueda ser débil o donde se requiera mayor ancho de banda.
-  - La Raspberry Pi no procesa los datos directamente, sino que los reenvía al broker MQTT, usando Wi-Fi o Ethernet según disponibilidad.
-  - Ambas tecnologías garantizan una comunicación eficiente con el broker MQTT.
+- **Wi-Fi/Ethernet:** Comunicación entre la Raspberry Pi (broker MQTT) y los clientes MQTT. **Razones clave:**
+  - **Wi-Fi** permite que los encargados del vivero accedan a los datos en tiempo real sin necesidad de cableado.
+  - **Ethernet** proporciona una conexión más estable en zonas donde la señal Wi-Fi puede ser débil.
+  - Ambas tecnologías garantizan que los usuarios puedan suscribirse al broker MQTT para visualizar los datos y controlar el sistema de riego de forma remota.
 
-Otras alternativas como Bluetooth Low Energy (BLE), LoRa y redes móviles (4G/5G) fueron descartadas debido a su menor alcance, consumo energético o costos asociados, por más de que algunas son capaces de alcanzar mayores velocidades de transmisión (como en el caso de BLE) [3].
+Otras alternativas como Bluetooth Low Energy (BLE), LoRa y redes móviles (4G/5G) fueron descartadas debido a su menor alcance, consumo energético o costos asociados; por más de que algunas, como en el caso de BLE, son capaces de alcanzar mayores velocidades de transmisión [3].
 
 ### Protocolo de Comunicación
 
-El protocolo **MQTT (Message Queuing Telemetry Transport)** se utilizará para la comunicación entre la Raspberry Pi, el servidor y los clientes, debido a sus ventajas en entornos IoT:
+El protocolo **MQTT (Message Queuing Telemetry Transport)** se utilizará para la comunicación entre la Raspberry Pi y los clientes MQTT, debido a sus ventajas en entornos IoT:
 - Protocolo ligero, optimizado para dispositivos con recursos limitados, lo que permite una comunicación eficiente y un bajo consumo energético [6].
 - Eficiencia en el uso del ancho de banda, ya que está diseñado para transmitir mensajes cortos y comandos, lo que lo hace ideal para redes con restricciones de conectividad [5].
-- **Modelo publish-subscribe**, que facilita el intercambio de datos entre múltiples dispositivos (sensores, servidores, actuadores) sin necesidad de conexiones directas [5]. Los dispositivos publican información en un tema dentro de un broker MQTT, y otros dispositivos pueden suscribirse para recibir los datos en tiempo real [6].
+- **Modelo publish-subscribe**, que facilita la distribución de datos en tiempo real sin necesidad de conexiones directas entre dispositivos, al poderse publicar y recibir información en temas mediante el uso de un broker MQTT [6].
 - Soporte para QoS (Quality of Service), lo que permite distintos niveles de aseguramiento en la entrega de mensajes: QoS 0 (at most once), QoS 1 (at least once) y QoS 2 (exactly once), garantizando la transmisión de información crítica como la activación del riego [6].
-- Manejo de desconexiones, utilizando el mecanismo de Last Will and Testament (LWT), que notifica a los clientes suscritos cuando un dispositivo se desconecta inesperadamente [6].
-- Facilidad de implementación en dispositivos como Raspberry Pi y ESP8266, ya que aprovecha los adaptadores Wi-Fi integrados para la conexión sin necesidad de hardware adicional ni cableado complejo [5].
+- Manejo de desconexiones, utilizando el mecanismo de Last Will and Testament (LWT), que notifica a los clientes cuando un dispositivo se desconecta inesperadamente [6].
+- Facilidad de implementación en dispositivos como Raspberry Pi, ya que aprovecha los adaptadores Wi-Fi integrados para la conexión sin necesidad de hardware adicional [5].
 
 <p align="justify">
 Otras opciones consideradas fueron HTTP y CoAP. Sin embargo, HTTP resulta demasiado pesado para dispositivos IoT, ya que consume más energía y ancho de banda, además de generar mayor latencia en la transmisión de datos. Aunque es ampliamente conocido y compatible con sistemas antiguos, no está optimizado para escenarios donde se requiere eficiencia en tiempos de respuesta y bajo consumo [7].
@@ -106,13 +107,17 @@ Por otro lado, CoAP es un protocolo más ligero que HTTP, pero no ofrece la mism
 
 El sistema opera en tiempo real con el siguiente flujo:
 
-1. **Medición y transmisión:** Los sensores detectan humedad, temperatura y pH, mandando los datos al microcontrolador de cada mesa, el cual los envía a la Raspberry Pi mediante Zigbee.
-3. **Procesamiento y comunicación:** La Raspberry Pi actúa como gateway, publicando la información en el broker MQTT mediante Wi-Fi o Ethernet.
-4. **Distribución y control:** A través de los temas específicos, se mandan los datos a los dispositivos suscriptores:
-   - **Toma de decisiones:** El servidor central analiza los datos y activa/desactiva el riego según umbrales predefinidos.
-   - **Supervisión remota:** Los encargados del vivero pueden monitorear las condiciones a través de una interfaz conectada al sistema.
+1. **Medición y transmisión:** Los sensores detectan humedad, temperatura y pH, enviando los datos al microcontrolador de cada mesa, el cual los transmite a la Raspberry Pi mediante Zigbee.
+3. **Procesamiento y comunicación:** La Raspberry Pi, que actúa como gateway, procesa y publica la información en el broker MQTT.
+4. **Distribución y control:** A través de los temas específicos, los datos se distribuyen a los clientes MQTT:
+   - **Toma de decisiones:** Se analizan los datos y se activan/desactivan los actuadores según umbrales predefinidos.
+   - **Supervisión remota:** Los encargados del vivero pueden visualizar las condiciones del invernadero mediante una interfaz conectada al broker MQTT.
   
-Este diseño permite optimizar el consumo de agua y mejorar la eficiencia del riego en el vivero, facilitando su gestión a través de una solución escalable y automatizada.
+Este diseño optimiza el consumo de agua y mejora la eficiencia del riego en el vivero, facilitando su gestión a través de una solución escalable y automatizada.
+
+### Topología del sistema
+
+Para ilustrar la arquitectura, a continuación se presenta un esquema de la topología del sistema:
 
 ---
 
