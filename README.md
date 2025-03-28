@@ -97,7 +97,9 @@ El protocolo **MQTT (Message Queuing Telemetry Transport)** se utilizará para l
 - Facilidad de implementación en dispositivos como Raspberry Pi y ESP8266, ya que aprovecha los adaptadores Wi-Fi integrados para la conexión sin necesidad de hardware adicional ni cableado complejo [5].
 
 <p align="justify">
-Otras opciones consideradas fueron HTTP y CoAP. Sin embargo, por un lado HTTP es demasiado pesado para dispositivos IoT, mientras que CoAP, aunque puede llegar a ser eficiente, no ofrece la misma flexibilidad y compatibilidad con plataformas ya existentes.
+Otras opciones consideradas fueron HTTP y CoAP. Sin embargo, HTTP resulta demasiado pesado para dispositivos IoT, ya que consume más energía y ancho de banda, además de generar mayor latencia en la transmisión de datos. Aunque es ampliamente conocido y compatible con sistemas antiguos, no está optimizado para escenarios donde se requiere eficiencia en tiempos de respuesta y bajo consumo [7].
+
+Por otro lado, CoAP es un protocolo más ligero que HTTP, pero no ofrece la misma flexibilidad ni compatibilidad con plataformas ya existentes. Además, MQTT supera a ambos en optimización de throughput, eficiencia energética y manejo de conexiones intermitentes, gracias a características como QoS, retención de mensajes y el mecanismo de Última Voluntad (LWT) [7].
 </p>
 
 ### Funcionamiento del MVP
@@ -195,7 +197,9 @@ Para la simulación en Cisco Packet Tracer, inicialmente se encontró el problem
 
 [5] Tutorials for Raspberry Pi,  “Wireless communication between Raspberry Pi’s via MQTT broker/client,” *Tutorials for Raspberry Pi*, n. d. [Online]. Disponible en:  [https://tutorials-raspberrypi.com/raspberry-pi-mqtt-broker-client-wireless-communication/](https://tutorials-raspberrypi.com/raspberry-pi-mqtt-broker-client-wireless-communication/). [Accedido: 27-mar-2025].
 
-[6] Automation Community,  “MQTT Questions and Answers – Message Queuing Telemetry Transport,” *Automation Community*, n. d. [Online]. Disponible en:  [https://automationcommunity.com/mqtt-questions-and-answers/](https://automationcommunity.com/mqtt-questions-and-answers/). [Accedido: 27-mar-2025].
+[6] Automation Community,  “MQTT Questions and Answers – Message Queuing Telemetry Transport,” *Automation Community*, n. d. [Online]. Disponible en: [https://automationcommunity.com/mqtt-questions-and-answers/](https://automationcommunity.com/mqtt-questions-and-answers/). [Accedido: 27-mar-2025].
+
+[7] Angel H.,  “MQTT vs HTTP: ¿qué protocolo es mejor para IoT?,” *BBITS*, 18 de abril de 2020. [Online]. Disponible en: [https://borrowbits.com/2020/04/mqtt-vs-http-que-protocolo-es-mejor-para-iot/]([https://automationcommunity.com/mqtt-questions-and-answers/](https://borrowbits.com/2020/04/mqtt-vs-http-que-protocolo-es-mejor-para-iot/)). [Accedido: 27-mar-2025].
 
 ---
 
