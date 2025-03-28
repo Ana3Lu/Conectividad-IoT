@@ -89,10 +89,11 @@ Otras alternativas como Bluetooth Low Energy (BLE), LoRa y redes móviles (4G/5G
 ### Protocolo de Comunicación
 
 El protocolo **MQTT (Message Queuing Telemetry Transport)** se utilizará para la comunicación entre la Raspberry Pi, el servidor y los clientes, debido a sus ventajas en entornos IoT:
-- Protocolo ligero, optimizado para dispositivos con recursos limitados, lo que permite una comunicación eficiente y un bajo consumo energético.
+- Protocolo ligero, optimizado para dispositivos con recursos limitados, lo que permite una comunicación eficiente y un bajo consumo energético [6].
 - Eficiencia en el uso del ancho de banda, ya que está diseñado para transmitir mensajes cortos y comandos, lo que lo hace ideal para redes con restricciones de conectividad [5].
-- **Modelo publish-subscribe**, que facilita el intercambio de datos entre múltiples dispositivos (sensores, servidores, actuadores) sin necesidad de conexiones directas [5].
-- Soporte para **QoS (Quality of Service)**, garantizando la entrega confiable de mensajes críticos, como la activación del riego.
+- **Modelo publish-subscribe**, que facilita el intercambio de datos entre múltiples dispositivos (sensores, servidores, actuadores) sin necesidad de conexiones directas [5]. Los dispositivos publican información en un tema dentro de un broker MQTT, y otros dispositivos pueden suscribirse para recibir los datos en tiempo real [6].
+- Soporte para QoS (Quality of Service), lo que permite distintos niveles de aseguramiento en la entrega de mensajes: QoS 0 (at most once), QoS 1 (at least once) y QoS 2 (exactly once), garantizando la transmisión de información crítica como la activación del riego [6].
+- Manejo de desconexiones, utilizando el mecanismo de Last Will and Testament (LWT), que notifica a los clientes suscritos cuando un dispositivo se desconecta inesperadamente [6].
 - Facilidad de implementación en dispositivos como Raspberry Pi y ESP8266, ya que aprovecha los adaptadores Wi-Fi integrados para la conexión sin necesidad de hardware adicional ni cableado complejo [5].
 
 <p align="justify">
@@ -193,6 +194,8 @@ Para la simulación en Cisco Packet Tracer, inicialmente se encontró el problem
 [4] Abiertaugr,  “Zigbee,” *Abiertaugr*, n. d. [Online]. Disponible en:  [https://abierta.ugr.es/pluginfile.php/76391/mod_resource/content/2/9_zigbee.html](https://abierta.ugr.es/pluginfile.php/76391/mod_resource/content/2/9_zigbee.html). [Accedido: 27-mar-2025].
 
 [5] Tutorials for Raspberry Pi,  “Wireless communication between Raspberry Pi’s via MQTT broker/client,” *Tutorials for Raspberry Pi*, n. d. [Online]. Disponible en:  [https://tutorials-raspberrypi.com/raspberry-pi-mqtt-broker-client-wireless-communication/](https://tutorials-raspberrypi.com/raspberry-pi-mqtt-broker-client-wireless-communication/). [Accedido: 27-mar-2025].
+
+[6] Automation Community,  “MQTT Questions and Answers – Message Queuing Telemetry Transport,” *Automation Community*, n. d. [Online]. Disponible en:  [https://automationcommunity.com/mqtt-questions-and-answers/](https://automationcommunity.com/mqtt-questions-and-answers/). [Accedido: 27-mar-2025].
 
 ---
 
