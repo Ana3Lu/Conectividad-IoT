@@ -199,7 +199,7 @@ Para la simulación en Cisco Packet Tracer, inicialmente se encontró el problem
 
 [6] Automation Community,  “MQTT Questions and Answers – Message Queuing Telemetry Transport,” *Automation Community*, n. d. [Online]. Disponible en: [https://automationcommunity.com/mqtt-questions-and-answers/](https://automationcommunity.com/mqtt-questions-and-answers/). [Accedido: 27-mar-2025].
 
-[7] Angel H.,  “MQTT vs HTTP: ¿qué protocolo es mejor para IoT?,” *BBITS*, 18 de abril de 2020. [Online]. Disponible en: [https://borrowbits.com/2020/04/mqtt-vs-http-que-protocolo-es-mejor-para-iot/]([https://automationcommunity.com/mqtt-questions-and-answers/](https://borrowbits.com/2020/04/mqtt-vs-http-que-protocolo-es-mejor-para-iot/)). [Accedido: 27-mar-2025].
+[7] Angel H.,  “MQTT vs HTTP: ¿qué protocolo es mejor para IoT?,” *BBITS*, 18 de abril de 2020. [Online]. Disponible en: [https://borrowbits.com/2020/04/mqtt-vs-http-que-protocolo-es-mejor-para-iot/](https://borrowbits.com/2020/04/mqtt-vs-http-que-protocolo-es-mejor-para-iot/)). [Accedido: 27-mar-2025].
 
 ---
 
