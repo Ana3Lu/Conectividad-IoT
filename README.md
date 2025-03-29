@@ -321,3 +321,65 @@ A pesar de las restricciones impuestas por la plataforma de simulación, la expe
 ---
 
 ## 7. Anexos
+
+#### Código MCU
+```
+function setup() {
+  pinMode(6, INPUT);     // Entrada del sensor Temperatura
+  pinMode(7, INPUT);     // Entrada del sensor Humedad
+  pinMode(8, INPUT);     // Entrada del sensor Ph
+  pinMode(1, OUTPUT);    // Sprinkler
+  pinMode(0, OUTPUT);    // Fan
+}
+
+function loop() {
+	var temperatura = analogRead(6);
+	var humedad = analogRead(7);
+	var ph = analogRead(8);
+	
+	Serial.println("Valor leído temperatura: " + temperatura);
+	Serial.println("Valor leído humedad: " + humedad);
+	Serial.println("Valor leído ph: " + ph);
+  
+	if (ph < 350) {
+	    customWrite(1, "2");  // pH bajo → solución alcalina
+	    Serial.println("Enviando al Sprinkle: 2");
+	} else if (ph > 550) {
+	    customWrite(1, "3");  // pH alto → solución ácida
+	    Serial.println("Enviando al Sprinkle: 3");
+	} else {
+	    customWrite(1, "0");  // Sprinkle apagado por pH normal
+	    Serial.println("Enviando al Sprinkle: 0");
+    
+	    // Solo controla el Sprinkler si el pH está en rango normal
+	    if (humedad < 600) {
+	      customWrite(1, "1");   // Enciende Sprinkler Agua
+	      Serial.println("Enviando al Sprinkle: 1");
+	    } else {
+	      customWrite(1, "0");   // Apaga Sprinkler
+	    }
+	}
+  
+	if (temperatura > 500) {
+	    customWrite(0, "2"); 
+	    Serial.println("Enviando al ventilador: 2");
+	} else if (temperatura > 400) {
+	    customWrite(0, "1"); 
+	    Serial.println("Enviando al ventilador: 1");
+	} else {
+	    customWrite(0, "0"); 
+	    Serial.println("Enviando al ventilador: 0");
+	}
+	
+	// Publicar los datos de los sensores al Broker MQTT en el Servidor
+  	Serial.println("MQTT Publicar sensor/temperatura " + temperatura);
+  	Serial.println("MQTT Publicar sensor/humedad " + humedad);
+  	Serial.println("MQTT Publicar sensor/ph " + ph);
+
+  	// Solo imprimimos los valores para simular que se envían
+    Serial.println("DATOS: temp=" + temperatura + ", hum=" + humedad + ", ph=" + ph);
+  
+
+  delay(1000);
+}
+```
