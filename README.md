@@ -85,7 +85,7 @@ El Producto Mínimo Viable (MVP) propuesto se basa en una arquitectura IoT híbr
 
 ### Tecnologías de Comunicación
 <p align="justify">
-Se ha optado por una combinación de **Zigbee** y **Wi-Fi/Ethernet**, cada uno con un propósito específico definido dentro de la arquitectura del MVP:
+Se ha optado por una combinación de Zigbee y Wi-Fi/Ethernet, cada uno con un propósito específico definido dentro de la arquitectura del MVP:
 </p>
 
 #### Zigbee (Comunicación interna entre sensores, microcontroladores y Raspberry Pi):
