@@ -194,11 +194,25 @@ Para validar el correcto funcionamiento de la simulación en Cisco Packet Tracer
 
 Esta fase aseguró que los principios básicos de la automatización del riego sean funcionales en una implementación real con MQTT y Zigbee.
 
-#### Desafíos y Soluciones:
-<p align="justify">
-Para la simulación en Cisco Packet Tracer, inicialmente se encontró el problema de que no hay soporte para tecnologías como Zigbee ni MQTT. Por tanto, como alternativas se usaron únicamente Wi-Fi y HTTP para la comunicación. 
 
----
+### 4.3 Desafíos y Soluciones
+
+Durante el desarrollo de la simulación en Cisco Packet Tracer, se presentaron varios retos que debieron ser superados:
+
+1. **Limitaciones de los Protocolos:**
+   - La principal limitación fue la falta de soporte para tecnologías como **Zigbee** y **MQTT**, que inicialmente eran fundamentales para la arquitectura. Debido a estas restricciones, se optó por utilizar **Wi-Fi** como medio de comunicación y **HTTP** como protocolo de transmisión de datos, aunque no se pudo aprovechar al máximo la eficiencia de MQTT en términos de consumo energético y manejo de conexiones intermitentes.
+   - El **MCU** no soportaba **HTTP**, lo que dificultó la recolección de datos mediante API, limitando la posibilidad de transmitir información al servidor a través de métodos estándar para dispositivos IoT. Como resultado, toda la comunicación tuvo que realizarse mediante conexiones Wi-Fi directas entre los dispositivos.
+
+2. **Problemas de Identificación de Actuadores:**
+   - Uno de los retos más destacados fue la identificación y control de **actuadores**, como los aspersores de agua. Aunque el dispositivo parecía estar encendido, en ocasiones el **IoT Monitor** de Cisco Packet Tracer no permitía activarlo o desactivarlo correctamente, mostrando inconsistencias en la comunicación.
+   - La solución consistió en conectar los actuadores directamente al **Home Gateway** para que fueran reconocidos por el sistema y garantizar su control. Este enfoque, aunque útil, evidenció la falta de estabilidad en la identificación de algunos dispositivos dentro de la plataforma.
+
+3. **Limitaciones del Software de Programación:**
+   - El entorno de programación en **Blink (Python)** y **JavaScript** en Cisco Packet Tracer es limitado, ya que las bibliotecas y funciones disponibles son muy básicas, lo que restringe la posibilidad de implementar funcionalidades avanzadas. Esto hizo que ciertas tareas, como la recolección y el envío de datos, fueran complicadas de implementar de manera eficiente.
+
+
+
+
 
 ## 5. Conclusión
 
