@@ -185,6 +185,7 @@ El sistema está compuesto por los siguientes elementos clave:
 Para la implementación de la red IoT en Cisco Packet Tracer, fue necesario adaptar la arquitectura inicial debido a la falta de soporte para tecnologías como Zigbee. Como alternativas se realizaron dos simulaciones en Cisco Packet Tracer, donde se configuraron los dispositivos para simular la comunicación entre sensores, actuadores y servidores utilizando MCU, SBC, MQTT y Serial Monitor.
 
 1. **Primera simulación (Conexión Directa con Wi-Fi e IoT Monitor)**
+![Primera simulación PT](Simulacion1PT.jpg)
 - Se implementó el código del MCU para leer valores de los sensores y controlar los actuadores de acuerdo con los valores recibidos.
 - **Configuración de la red Wi-Fi:**
   - Se utilizó un Home Gateway como punto de acceso Wi-Fi para conectar los dispositivos IoT.
@@ -202,7 +203,7 @@ Para la implementación de la red IoT en Cisco Packet Tracer, fue necesario adap
   - Aunque se logró la transmisión de datos, IoT Monitor no permitió un control avanzado del sistema.
   - La comunicación se limitó a Wi-Fi sin posibilidad de usar otros protocolos como MQTT.
 
-2. **Segunda simulación (Implementación con SBC como Broker MQTT y Cliente)**
+2. **Segunda simulación (Mostrado en la topología -> Implementación con SBC como Broker MQTT y Cliente)**
 - **Mejoras en la arquitectura:**
   - Se hizo que el Single Board Computer (SBC), que simula una Raspberry Pi, actúe como broker y cliente MQTT.
 - Se reemplazó el IoT Monitor por una comunicación basada en MQTT.
