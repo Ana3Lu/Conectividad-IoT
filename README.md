@@ -223,6 +223,31 @@ El uso de Cisco Packet Tracer como herramienta de simulación ha sido esencial p
 
 A pesar de las restricciones impuestas por la plataforma de simulación, la experiencia adquirida proporciona un sólido punto de partida para futuras implementaciones reales, donde la optimización del riego y el ahorro de recursos se convierten en factores clave para el éxito del vivero. Este sistema no solo mejora la eficiencia operativa, sino que también contribuye a la sostenibilidad del entorno, ofreciendo beneficios tanto a los productores como al medio ambiente.
 
+
+### Criterios de Diseño:
+
+1. **Eficiencia Energética**: Minimizar el consumo energético en sensores y microcontroladores mediante tecnologías de bajo consumo como Zigbee y Wi-Fi.
+
+2. **Escalabilidad**: Facilitar la expansión del sistema con nuevos sensores y actuadores sin cambiar la infraestructura.
+
+3. **Fiabilidad**: Garantizar una comunicación estable mediante Zigbee y MQTT, incluso en condiciones variables.
+
+4. **Facilidad de Implementación y Mantenimiento**: Uso de plataformas comunes (como Raspberry Pi) y una interfaz web intuitiva para fácil gestión.
+
+5. **Optimización de Recursos**: Control automático del riego según las condiciones del suelo, reduciendo el desperdicio de agua.
+
+6. **Interfaz Accesible**: Dashboard web para monitoreo y control remoto del sistema.
+
+7. **Seguridad de Datos**: Cifrado y autenticación en las comunicaciones para proteger la información.
+
+8. **Reducción de Costos**: Uso de componentes económicos y eficiencia en el consumo de energía y agua.
+
+9. **Resiliencia**: Capacidad de recuperación ante fallos en la red o dispositivos para mantener el funcionamiento.
+
+10. **Compatibilidad con Simulación**: Adaptación a Cisco Packet Tracer para validar la solución antes de la implementación real. 
+
+
+
 ## 6. Referencias
 
 [1] Tecnología y Proyectos Controla, “Conectividad Agroindustrial,” *Tecnologías Controla*, n.d. [Online]. Disponible en: [https://www.tecnologiascontrola.com.mx/servicios/conectividad-agroindustrial/](https://www.tecnologiascontrola.com.mx/servicios/conectividad-agroindustrial/). [Accedido: 27-mar-2025]. 
