@@ -217,7 +217,11 @@ Durante el desarrollo de la simulación en Cisco Packet Tracer, se presentaron v
 ## 5. Conclusión
 
 
----
+La implementación de un sistema automatizado de riego basado en IoT en el Vivero Plantaciones Ravelo ofrece una solución eficiente para optimizar el uso de recursos hídricos y mejorar las condiciones de los cultivos. El desarrollo de un Producto Mínimo Viable (MVP) utilizando tecnologías como Wi-Fi, HTTP y microcontroladores ha permitido demostrar la viabilidad de integrar sensores para el monitoreo de variables clave como humedad del suelo, temperatura ambiente y pH del sustrato, lo que se traduce en un control más preciso y automatizado del riego.
+
+El uso de Cisco Packet Tracer como herramienta de simulación ha sido esencial para validar los principios básicos de la arquitectura IoT propuesta antes de una implementación real. Si bien se enfrentaron desafíos, como la limitación de protocolos como Zigbee y MQTT, se logró una solución funcional adaptando las tecnologías disponibles, lo que resalta la flexibilidad y capacidad de adaptación del sistema.
+
+A pesar de las restricciones impuestas por la plataforma de simulación, la experiencia adquirida proporciona un sólido punto de partida para futuras implementaciones reales, donde la optimización del riego y el ahorro de recursos se convierten en factores clave para el éxito del vivero. Este sistema no solo mejora la eficiencia operativa, sino que también contribuye a la sostenibilidad del entorno, ofreciendo beneficios tanto a los productores como al medio ambiente.
 
 ## 6. Referencias
 
