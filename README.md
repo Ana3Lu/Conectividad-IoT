@@ -181,7 +181,7 @@ El sistema está compuesto por los siguientes elementos clave:
 A continuación se presenta el diagrama UML de actividades desarrollado en el sistema:
 
 ![UML de Actividades del sistema](DiagramaActSistema.png)
-*Figura 2: Diagrama UML de actividades de la propuesta.*
+*Figura 2: Diagrama UML de actividades de la propuesta desarrollada en la primera simulación de PT, dado que es en el que se evidencia la transmisión de los datos desde el área del vivero hasta el usuario remoto.*
 
 Este diagrama representa el flujo de funcionamiento del sistema IoT para la automatización de riego en un vivero. Se divide en tres módulos principales:
 	Flujo Principal: Configura el entorno de ejecución, establece la conexión con el MCU, inicializa sensores y espera la señal de inicio.
