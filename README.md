@@ -63,21 +63,23 @@ El Producto Mínimo Viable (MVP) incorporará sensores de **humedad del suelo, t
 
 ### Arquitectura propuesta
 <p align="justify">
-El Producto Mínimo Viable (MVP) propuesto se basa en una arquitectura IoT híbrida y distribuida, estructurada según los componentes fundamentales de un sistema IoT: percepción, computación, conectividad y analítica/visualización. Esta arquitectura integra sensores, microcontroladores, una Raspberry Pi como gateway y broker MQTT, actuadores y una interfaz de usuario. Asimismo, se seleccionó una combinación de tecnologías Zigbee y Wi-Fi/Ethernet para asegurar eficiencia energética, escalabilidad, estabilidad en la transmisión de datos y facilidad de mantenimiento dentro del vivero.  
+El Producto Mínimo Viable (MVP) se basa en una arquitectura IoT híbrida y distribuida, estructurada en cuatro componentes clave: percepción, computación, conectividad y analítica/visualización. Se integra una combinación de tecnologías Zigbee y Wi-Fi/Ethernet para garantizar eficiencia energética, escalabilidad y estabilidad en la transmisión de datos dentro del vivero.
 </p>
 
 ### Componentes principales
 #### 1. Percepción
-  - **Sensores IoT:** Los sensores de humedad del suelo, temperatura ambiente y pH del sustrato se encargan de recolectar datos del entorno físico en las bandejas que hay en cada mesa del cultivo ornamental. Estas bandejas comparten un mismo sustrato, lo que facilita un monitoreo colectivo más eficiente y preciso de las condiciones del cultivo.
-  - **Actuadores (válvulas de riego y ventiladores):** Ejecutan acciones físicas en función de las decisiones tomadas por el sistema. Las válvulas controlan el paso de agua y soluciones ácidas o alcalinas hacia el cultivo, mientras que el ventilador se activa para regular la temperatura cuando se superan ciertos umbrales definidos. Ambos actuadores reciben señales digitales desde el microcontrolador, respondiendo de forma automatizada a las condiciones monitoreadas por los sensores, lo que permite una gestión eficiente y precisa del ambiente dentro del vivero.
+  - **Sensores IoT:** Monitorean humedad del suelo, temperatura ambiente y pH del sustrato en las bandejas de cada mesa del cultivo ornamental, facilitando un monitoreo colectivo preciso.
+  - **Actuadores (válvulas de riego y ventiladores):** Ejecutan acciones físicas en función de las decisiones tomadas por el sistema. Las válvulas controlan el paso de agua y soluciones ácidas o alcalinas hacia el cultivo, mientras que el ventilador se activa para regular la temperatura cuando se superan ciertos umbrales definidos.
+    - Ambos actuadores reciben señales digitales desde el microcontrolador, respondiendo de forma automatizada a las condiciones monitoreadas por los sensores, lo que permite una gestión eficiente y precisa del ambiente dentro del vivero.
 
 #### 2. Computación
-  - **Microcontroladores (MCU):** Procesan los datos recibidos desde los sensores y los transmiten a la Raspberry Pi utilizando Zigbee. Estos dispositivos funcionan como sistemas embebidos de bajo consumo, lo que los hace ideales para el monitoreo distribuido en zonas alejadas del vivero.
+  - **Microcontroladores (MCU):** Procesan los datos recibidos desde los sensores y los transmiten a la Raspberry Pi utilizando Zigbee, donde estos dispositivos funcionan como sistemas embebidos de bajo consumo.
   - **Raspberry Pi (Gateway IoT y Broker MQTT):** Coordina la red Zigbee local, gestionando la comunicación entre los microcontroladores distribuidos. Además, actúa como broker MQTT, permitiendo la publicación y suscripción de mensajes entre los sensores, actuadores y la interfaz de usuario. También tiene la capacidad de ejecutar software ligero para realizar tareas de preprocesamiento de datos o verificación de conectividad local, aprovechando los principios de la computación en el borde (Edge Computing).
 
 #### 3. Conectividad
   - **Red Zigbee:** Conecta los sensores y microcontroladores dentro del sistema, proporcionando baja latencia, consumo energético reducido y alta confiabilidad incluso en entornos con interferencias. Su topología mallada y el uso de bandas de frecuencia como 2.4 GHz, 868 MHz o 915 MHz permiten una cobertura extendida y estable en todo el vivero [4].
-  - **Wi-Fi / Ethernet (comunicación con clientes y dispositivos externos):** Se utiliza exclusivamente para la comunicación entre la Raspberry Pi y los clientes externos, como la interfaz web o aplicaciones de monitoreo. Wi-Fi es la opción preferida en zonas donde no es viable realizar cableado, mientras que Ethernet ofrece una conexión más estable y de mayor velocidad en áreas con señal inalámbrica débil. Ambas tecnologías permiten la transmisión eficiente de datos hacia los dispositivos de monitoreo remoto.
+  - **Wi-Fi / Ethernet (comunicación con clientes y dispositivos externos):** Facilita la comunicación entre la Raspberry Pi y la interfaz de usuario, permitiendo acceso remoto y transmisión eficiente de datos.
+  - Wi-Fi es la opción preferida en zonas donde no es viable realizar cableado, mientras que Ethernet ofrece una conexión más estable y de mayor velocidad en áreas con señal inalámbrica débil. Ambas tecnologías permiten la transmisión eficiente de datos hacia los dispositivos de monitoreo remoto.
 
 #### 4. Analítica y Visualización
   - **Raspberry Pi como broker y gestor de datos:** Recibe y organiza los datos de los sensores, permitiendo la activación de actuadores en función de los valores monitoreados. También puede almacenar registros locales para un análisis posterior si la conexión a internet se ve interrumpida.
@@ -102,13 +104,13 @@ Se ha optado por una combinación de Zigbee y Wi-Fi/Ethernet, cada uno con un pr
 - **Ambas tecnologías:** Permiten la comunicación eficiente entre la Raspberry Pi y los clientes MQTT, asegurando la disponibilidad de los datos en tiempo real para supervisión y control remoto del sistema.
 
 <p align="justify">
-Otras tecnologías como Bluetooth Low Energy (BLE), LoRa y redes móviles (4G/5G) fueron descartadas debido a sus  limitaciones en alcance, compatibilidad o costos. Aunque BLE ofrece alta velocidad de transmisión, su cobertura limitada y su sensibilidad a interferencias no se alinean con los requerimientos del vivero [3].
+Otras tecnologías como Bluetooth Low Energy (BLE), LoRa y redes móviles (4G/5G) fueron descartadas debido a sus limitaciones en alcance, compatibilidad o costos.
 </p>
 
 ### Protocolo de Comunicación
 
 El protocolo **MQTT (Message Queuing Telemetry Transport)** se utilizará para la comunicación entre la Raspberry Pi y los clientes MQTT, debido a sus ventajas en entornos IoT:
-- Protocolo ligero, optimizado para dispositivos con recursos limitados, lo que permite una comunicación eficiente y un bajo consumo energético [6].
+- Ligero, optimizado para dispositivos con recursos limitados, lo que permite una comunicación eficiente y un bajo consumo energético [6].
 - Eficiencia en el uso del ancho de banda, ya que está diseñado para transmitir mensajes cortos y comandos, lo que lo hace ideal para redes con restricciones de conectividad [5].
 - **Modelo publish-subscribe**, que facilita la distribución de datos en tiempo real sin necesidad de conexiones directas entre dispositivos, al poderse publicar y recibir información en temas mediante el uso de un broker MQTT [6].
 - Soporte para QoS (Quality of Service), lo que permite distintos niveles de aseguramiento en la entrega de mensajes: QoS 0 (at most once), QoS 1 (at least once) y QoS 2 (exactly once), garantizando la transmisión de información crítica como la activación del riego [6].
@@ -122,7 +124,7 @@ Por otro lado, CoAP es un protocolo más ligero que HTTP, pero no ofrece la mism
 </p>
 
 ### Criterios de Diseño 
-Para que el sistema trabaje como lo esperado, se establecieron los siguientes criterios de diseño:
+Para que el sistema trabaje como lo esperado, se establecieron los siguientes criterios:
 - **Eficiencia Energética:** Minimizar el consumo energético en sensores y microcontroladores mediante tecnologías de bajo consumo como Zigbee y Wi-Fi.
 - **Escalabilidad:** Facilitar la expansión del sistema con nuevos sensores y actuadores sin cambiar la infraestructura.
 - **Fiabilidad:** Garantizar una comunicación estable mediante Zigbee y MQTT, incluso en condiciones variables.
@@ -133,8 +135,6 @@ Para que el sistema trabaje como lo esperado, se establecieron los siguientes cr
 - **Reducción de Costos:** Uso de componentes económicos y eficiencia en el consumo de energía y agua.
 - **Resiliencia:** Capacidad de recuperación ante fallos en la red o dispositivos para mantener el funcionamiento.
 - **Compatibilidad con Simulación:** Adaptación a Cisco Packet Tracer para validar la solución antes de la implementación real.
-
-
 
 ### Estándares de Ingeniería Aplicados:
 
