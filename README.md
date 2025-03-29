@@ -84,23 +84,26 @@ El Producto Mínimo Viable (MVP) propuesto se basa en una arquitectura IoT híbr
 - **Interfaz Web / Dashboard:** Permite al observador remoto, es decir, al personal del vivero, monitorear en tiempo real el estado del sistema, accediendo a la visualización de datos, alertas, umbrales y estadísticas clave para una gestión eficiente del riego y las condiciones del cultivo.
 
 ### Tecnologías de Comunicación
+<p align="justify">
+Se ha optado por una combinación de **Zigbee** y **Wi-Fi/Ethernet**, cada uno con un propósito específico definido dentro de la arquitectura del MVP:
+</p>
 
-Se ha optado por una combinación de **Zigbee** y **Wi-Fi/Ethernet**, cada uno con un propósito específico:
+#### Zigbee (Comunicación interna entre sensores, microcontroladores y Raspberry Pi):
+- **Bajo consumo energético:** Ideal para sensores distribuidos que operan durante largos periodos sin necesidad de recarga o reemplazo frecuente de baterías.
+- **Topología de red mallada:** Permite la comunicación entre múltiples nodos sin depender de un único punto de acceso, lo que mejora la cobertura en el vivero y proporciona tolerancia a fallos [4].
+- **Alta confiabilidad en la transmisión:** Implementa mecanismos de reintento de paquetes y corrección de errores, garantizando la integridad de los datos incluso en entornos con interferencias.
+- **Técnicas de mitigación de interferencias:** Emplea salto de frecuencia en bandas como 2.4 GHz, 868 MHz o 915 MHz, lo que evita colisiones con otros dispositivos inalámbricos [4].
+- **Seguridad integrada:** Utiliza cifrado de datos y autenticación para evitar accesos no autorizados [4].
+- **Optimizado para monitoreo ambiental:** Opera a velocidades adecuadas para el envío eficiente de datos de sensores sin sobrecargar el sistema [4].
 
-- **Zigbee:** Comunicación entre sensores, microcontroladores y la Raspberry Pi. **Razones clave:**
-  - Bajo consumo energético, lo que permite que los sensores operen por largos períodos sin reemplazo frecuente de baterías.
-  - Topología de red mallada, que permite la comunicación entre dispositivos sin depender de un único punto de acceso, mejorando la cobertura en el vivero y asegurando tolerancia a fallos [4].
-  - Alta confiabilidad en la transmisión de datos, al emplear reintentos de paquetes y corrección de errores para garantizar una comunicación precisa, incluso en entornos con interferencias [4].
-  - Uso de técnicas de mitigación de interferencias, como el salto de frecuencia en la banda de 2.4 GHz, 868 MHz o 915 MHz, lo que mejora la estabilidad en la comunicación y evita colisiones con otros dispositivos inalámbricos [4].
-  - Seguridad integrada, con medidas de cifrado y autenticación que protegen los datos transmitidos frente a accesos no autorizados [4].
-  - Optimizado para aplicaciones de monitoreo, dado que ZigBee opera a bajas velocidades de transmisión, lo que es suficiente para el intercambio eficiente de datos de sensores sin consumir ancho de banda innecesario [4].
-    
-- **Wi-Fi/Ethernet:** Comunicación entre la Raspberry Pi (broker MQTT) y los clientes MQTT. **Razones clave:**
-  - **Wi-Fi** permite que los encargados del vivero accedan a los datos en tiempo real sin necesidad de cableado.
-  - **Ethernet** proporciona una conexión más estable en zonas donde la señal Wi-Fi puede ser débil.
-  - Ambas tecnologías garantizan que los usuarios puedan suscribirse al broker MQTT para visualizar los datos y controlar el sistema de riego de forma remota.
+#### Wi-Fi / Ethernet (Comunicación externa entre Raspberry Pi y clientes MQTT):
+- **Wi-Fi:** Brinda una solución inalámbrica flexible en zonas del vivero donde no es factible el cableado, permitiendo movilidad y rápida implementación.
+- **Ethernet:** Ofrece una conexión más estable, con menor latencia y mayor velocidad en áreas donde la señal Wi-Fi es débil o la interferencia es frecuente.
+- **Ambas tecnologías:** Permiten la comunicación eficiente entre la Raspberry Pi y los clientes MQTT, asegurando la disponibilidad de los datos en tiempo real para supervisión y control remoto del sistema.
 
-Otras alternativas como Bluetooth Low Energy (BLE), LoRa y redes móviles (4G/5G) fueron descartadas debido a su menor alcance, consumo energético o costos asociados; por más de que algunas, como en el caso de BLE, son capaces de alcanzar mayores velocidades de transmisión [3].
+<p align="justify">
+Otras tecnologías como Bluetooth Low Energy (BLE), LoRa y redes móviles (4G/5G) fueron descartadas debido a sus  limitaciones en alcance, compatibilidad o costos. Aunque BLE ofrece alta velocidad de transmisión, su cobertura limitada y su sensibilidad a interferencias no se alinean con los requerimientos del vivero [3].
+</p>
 
 ### Protocolo de Comunicación
 
