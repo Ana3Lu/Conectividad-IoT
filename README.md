@@ -168,6 +168,7 @@ Este diseño optimiza el consumo de agua y mejora la eficiencia del riego en el 
 Para ilustrar la arquitectura del sistema, en la siguiente imagen se presenta un esquema de la topología de red implementada en el invernadero. En esta configuración, se utilizan distintos dispositivos IoT para la recolección y transmisión de datos ambientales, junto con actuadores para la regulación del microclima.
 
 ![Topología del sistema](Topologia.png)
+*Figura 1: Topología IoT propuesta de la propuesta.*
 
 El sistema está compuesto por los siguientes elementos clave:
 - **Sensores de temperatura, humedad y pH del suelo:** Ubicados en diferentes puntos del invernadero, estos dispositivos permiten la medición en tiempo real de las condiciones ambientales.
@@ -175,6 +176,19 @@ El sistema está compuesto por los siguientes elementos clave:
 - **Raspberry Pi:** Actúa como nodo central de procesamiento, funcionando simultáneamente como broker MQTT y cliente para la comunicación entre los ESP32 y el servidor.
 - **Home Gateway:** Dispositivo encargado de gestionar la conectividad entre la Raspberry Pi y la red externa, permitiendo el acceso remoto a los datos desde una laptop u otros dispositivos.
 - **Actuadores (ventiladores y aspersores):** Reciben comandos desde el sistema central para regular la humedad y temperatura del invernadero en función de los datos obtenidos.
+
+### Diagrama UML del sistema
+A continuación se presenta el diagrama UML de actividades desarrollado en el sistema:
+
+![UML de Actividades del sistema](DiagramaActSistema.png)
+*Figura 2: Diagrama UML de actividades de la propuesta.
+
+Este diagrama representa el flujo de funcionamiento del sistema IoT para la automatización de riego en un vivero. Se divide en tres módulos principales:
+	Flujo Principal: Configura el entorno de ejecución, establece la conexión con el MCU, inicializa sensores y espera la señal de inicio.
+	2.	Módulo de Sensado: Captura datos de temperatura, humedad y pH, enviándolos al MCU para su procesamiento.
+	3.	Módulo de Procesamiento (MCU): Evalúa las lecturas de los sensores y activa los actuadores (aspersores y ventiladores) según las condiciones detectadas.
+
+El sistema opera en un ciclo continuo de monitoreo y control, permitiendo visualizar los datos en tiempo real desde el IoT Monitor y recibir comandos de control remoto para ajustar el funcionamiento de los actuadores.
 
 ---
 
