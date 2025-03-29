@@ -165,7 +165,16 @@ Este diseño optimiza el consumo de agua y mejora la eficiencia del riego en el 
 
 ### Topología del sistema
 
-Para ilustrar la arquitectura, a continuación se presenta un esquema de la topología del sistema:
+Para ilustrar la arquitectura del sistema, en la siguiente imagen se presenta un esquema de la topología de red implementada en el invernadero. En esta configuración, se utilizan distintos dispositivos IoT para la recolección y transmisión de datos ambientales, junto con actuadores para la regulación del microclima.
+
+![Topología del sistema](Topologia.png)
+
+El sistema está compuesto por los siguientes elementos clave:
+- **Sensores de temperatura, humedad y pH del suelo:** Ubicados en diferentes puntos del invernadero, estos dispositivos permiten la medición en tiempo real de las condiciones ambientales.
+- **Microcontroladores (por ejemplo, ESP32):** Funcionan como nodos de adquisición de datos, recibiendo información de los sensores y transmitiéndola hacia el servidor central.
+- **Raspberry Pi:** Actúa como nodo central de procesamiento, funcionando simultáneamente como broker MQTT y cliente para la comunicación entre los ESP32 y el servidor.
+- **Home Gateway:** Dispositivo encargado de gestionar la conectividad entre la Raspberry Pi y la red externa, permitiendo el acceso remoto a los datos desde una laptop u otros dispositivos.
+- **Actuadores (ventiladores y aspersores):** Reciben comandos desde el sistema central para regular la humedad y temperatura del invernadero en función de los datos obtenidos.
 
 ---
 
