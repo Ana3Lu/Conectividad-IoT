@@ -182,10 +182,35 @@ El sistema está compuesto por los siguientes elementos clave:
 
 ### 4.1. Configuración de la Simulación
 
-Para la implementación del diseño de la red IoT en Cisco Packet Tracer, fue necesario adaptar la arquitectura inicial debido a la falta de soporte para tecnologías como Zigbee y MQTT. Como alternativa:
-- Se empleó Wi-Fi para la comunicación entre sensores y la Raspberry Pi.
-- Se sustituyó MQTT por HTTP como protocolo de transmisión de datos.
-- Se configuró un servidor HTTP para almacenar y procesar las lecturas de sensores simuladas.
+Para la implementación de la red IoT en Cisco Packet Tracer, fue necesario adaptar la arquitectura inicial debido a la falta de soporte para tecnologías como Zigbee. Como alternativas se realizaron dos simulaciones en Cisco Packet Tracer, donde se configuraron los dispositivos para simular la comunicación entre sensores, actuadores y servidores utilizando MCU, SBC, MQTT y Serial Monitor.
+
+1. **Primera simulación (Conexión Directa con Wi-Fi e IoT Monitor)**
+- Se implementó el código del MCU para leer valores de los sensores y controlar los actuadores de acuerdo con los valores recibidos.
+- **Configuración de la red Wi-Fi:**
+  - Se utilizó un Home Gateway como punto de acceso Wi-Fi para conectar los dispositivos IoT.
+- Se configuró el Home Gateway activando la red inalámbrica y estableciendo una clave de acceso.
+- Se conectaron el MCU (Microcontrolador IoT) y la laptop a la misma red Wi-Fi.
+- **Conexión de Sensores y Actuadores:**
+  - Los sensores de temperatura, humedad y pH se conectaron al MCU mediante puertos analógicos (A0, A1, A2).
+  - Los actuadores (aspersores y ventilador) se conectaron a puertos digitales (D0, D1).
+  - Se usó IoT Custom Cable para la conexión física entre el MCU y los sensores/actuadores.
+- **Prueba de Comunicación con IoT Monitor:**
+  - Se utilizó la aplicación IoT Monitor en la laptop para visualizar los datos transmitidos por los sensores.
+  - La laptop identificó automáticamente a los actuadores como un dispositivo IoT y se recibieron los valores de los sensores.
+  - Se validó la activación de actuadores desde la interfaz del IoT Monitor.
+- **Limitaciones encontradas:**
+  - Aunque se logró la transmisión de datos, IoT Monitor no permitió un control avanzado del sistema.
+  - La comunicación se limitó a Wi-Fi sin posibilidad de usar otros protocolos como MQTT.
+
+2. **Segunda simulación (Implementación con SBC como Broker MQTT y Cliente)**
+- **Mejoras en la arquitectura:**
+  - Se hizo que el Single Board Computer (SBC), que simula una Raspberry Pi, actúe como broker y cliente MQTT.
+- Se reemplazó el IoT Monitor por una comunicación basada en MQTT.
+- Se utilizaron los mismos sensores y actuadores, con la misma conexión por IoT Custom Cable y los mismos pines analógicos/digitales.
+- **Configuración del SBC:**
+  - El MCU envió datos de los sensores mediante Serial.println(), simulando la publicación de valores en MQTT.
+  - El SBC actuó como cliente MQTT, suscribiéndose a los datos enviados por el MCU.
+- **Limitación:** Cisco Packet Tracer no permite ejecutar MQTT completamente, por lo que solo se validó la comunicación mediante los mensajes *Serial.println()*.
 
 La selección de los componentes se basó en su compatibilidad con Cisco Packet Tracer y su capacidad de replicar el flujo de información esperado en la red IoT.
 
@@ -193,46 +218,43 @@ A continuación, se presentan los componentes utilizados y su función en la sim
 
 | *Componente*              | *Dispositivo en Packet Tracer*          | *Función* |
 |-----------------------------|---------------------------------|------------|
-| *Sensores IoT*  | *IoT Temperature, IoT Humidity* | Miden condiciones del ambiente y del suelo. |
-| *Microcontrolador local (ESP32/Arduino)* | *IoT Microcontroller* | Recibe los datos de los sensores y los transmite a la Raspberry Pi. |
-| *Coordinador/Gateway (Raspberry Pi)* | *Single Board Computer (SBC)* | Recibe datos de los microcontroladores y los envía al servidor. |
+| *Sensores IoT*  | *IoT Temperature, Humidity sensor, pH sensor* | Miden condiciones del ambiente y del suelo. |
+| *Microcontrolador (ESP32/Arduino)* | *MCU* | Recibe los datos de los sensores y pretende transmitirla a la Raspberry Pi (SBC). |
+| *Coordinador/Gateway (Raspberry Pi)* | *Single Board Computer (SBC)* | Recibe datos del MCU y los gestiona mediante MQTT. |
 | *Servidor/Dashboard* | *Server con Web Server activado* | Procesa y muestra los datos del vivero. |
 | *Red Wi-Fi* | *Home Gateway (Router Wi-Fi)* | Conecta todos los dispositivos a la red. |
-| *Actuadores (Aspersores)* | *IoT Water Sprinkler* | Se activa según condiciones del ambiente. |
+| *Actuadores (Aspersores y ventiladores)* | *IoT Water Sprinkler, IoT Fan* | Se activa según condiciones del ambiente. |
 
-Con esta configuración, se logró simular la comunicación entre sensores, microcontroladores y el servidor a través de Wi-Fi y HTTP.
+Con esta configuración, se logró simular la comunicación entre sensores, microcontroladores y el SBC a través de Wi-Fi y MQTT.
 
 #### Pasos de Implementación:
 1. **Configuración de la Red Wi-Fi:**
     - Se añadió un ***Home Gateway*** como punto de acceso Wi-Fi para los dispositivos IoT.
-    - Se conectó un switch opcional para permitir conexiones cableadas.
-    - Se integró un servidor mediante Ethernet para la gestión de datos.
-    - Se activó el servicio ***DHCP*** en el Home Gateway para asignación automática de direcciones IP.
+    - Se configuró la red Wi-Fi con una clave y contraseña para la conexión de dispositivos.
 2. **Adición de sensores y microcontroladores:**
     - Se colocaron los sensores: ***IoT Soil Moisture, IoT Temperature e IoT Humidity***.
     - Se agregaron IoT Microcontrollers para gestionar la comunicación de los sensores.
     - Se conectaron a la red Wi-Fi a través del Home Gateway.
-3. **Configuración de la Raspberry Pi (SBC):**
+3. **Configuración del SBC como Broker y Cliente MQTT:**
     - Se añadió un ***Single Board Computer (SBC)*** simulando la Raspberry Pi.
-    - Se configuró como cliente HTTP para enviar datos al servidor mediante comandos ***wget***.
+    - Se programó para recibir los datos enviados por el MCU mediante MQTT (segunda simulación).
+    - Se validó la comunicación mediante mensajes en Serial Monitor.
 4. **Incorporación de Actuadores:**
-    - Se incluyeron dispositivos IoT actuadores: aspersores de riego, ventiladores y luces.
-    - Se configuraron reglas en el servidor para su activación automática según los datos recibidos.
-5. **Configuración del Servidor y Dashboard:**
-    - Se activó el servicio ***HTTP Server*** en el servidor.
-    - Se creó una página web simulada en index.html para visualizar datos y controlar actuadores.
+    - Se incluyeron dispositivos IoT actuadores: aspersores de riego y ventiladores.
+    - Se verificó su activación automatizada en función de los datos procesados en la MCU.
 
 ### 4.2. Pruebas y Validación
 
-Para validar el correcto funcionamiento de la simulación en Cisco Packet Tracer, se realizaron las siguientes pruebas:
+Para validar el funcionamiento de la simulación en Cisco Packet Tracer, se realizaron las siguientes pruebas:
+
 - **Verificación de Conectividad:**
-    - Se comprobó que los sensores enviaban datos al microcontrolador usando Wi-Fi.
+    - Se comprobó que los sensores enviaban correctamente los datos al MCU.
     - Se verificó que la Raspberry Pi recibía datos y los enviaba al servidor mediante HTTP.
-    - Se utilizó un navegador web en la Raspberry Pi para acceder a la interfaz del servidor.
+    - Se usó Serial Monitor para visualizar los datos transmitidos.
 
 - **Pruebas de Control del Actuador:**
-    - Se activó el actuador desde la página web del servidor.
-    - Se verificó la respuesta del dispositivo aspersor al recibir comandos de activación/desactivación.
+    - Se activaron los actuadores en función de los datos recibidos por el MCU.
+    - Se verificó la respuesta del dispositivo aspersor y el ventilador al recibir comandos de activación/desactivación.
 
 Esta fase aseguró que los principios básicos de la automatización del riego sean funcionales en una implementación real con MQTT y Zigbee.
 
@@ -242,19 +264,17 @@ Esta fase aseguró que los principios básicos de la automatización del riego s
 Durante el desarrollo de la simulación en Cisco Packet Tracer, se presentaron varios retos que debieron ser superados:
 
 1. **Limitaciones de los Protocolos:**
-   - La principal limitación fue la falta de soporte para tecnologías como **Zigbee** y **MQTT**, que inicialmente eran fundamentales para la arquitectura. Debido a estas restricciones, se optó por utilizar **Wi-Fi** como medio de comunicación y **HTTP** como protocolo de transmisión de datos, aunque no se pudo aprovechar al máximo la eficiencia de MQTT en términos de consumo energético y manejo de conexiones intermitentes.
-   - El **MCU** no soportaba **HTTP**, lo que dificultó la recolección de datos mediante API, limitando la posibilidad de transmitir información al servidor a través de métodos estándar para dispositivos IoT. Como resultado, toda la comunicación tuvo que realizarse mediante conexiones Wi-Fi directas entre los dispositivos.
+   - La principal limitación fue la falta de soporte para tecnologías como Zigbee y MQTT, que inicialmente eran fundamentales para la arquitectura. Debido a estas restricciones, se optó por utilizar Wi-Fi como medio de comunicación y MQTT mediante Serial Monitor para simular la transmisión de datos.
+   - El MCU no soportaba completamente MQTT, lo que obligó a validar la comunicación mediante mensajes de texto en Serial Monitor.
 
 2. **Problemas de Identificación de Actuadores:**
    - Uno de los retos más destacados fue la identificación y control de **actuadores**, como los aspersores de agua. Aunque el dispositivo parecía estar encendido, en ocasiones el **IoT Monitor** de Cisco Packet Tracer no permitía activarlo o desactivarlo correctamente, mostrando inconsistencias en la comunicación.
    - La solución consistió en conectar los actuadores directamente al **Home Gateway** para que fueran reconocidos por el sistema y garantizar su control. Este enfoque, aunque útil, evidenció la falta de estabilidad en la identificación de algunos dispositivos dentro de la plataforma.
 
 3. **Limitaciones del Software de Programación:**
-   - El entorno de programación en **Blink (Python)** y **JavaScript** en Cisco Packet Tracer es limitado, ya que las bibliotecas y funciones disponibles son muy básicas, lo que restringe la posibilidad de implementar funcionalidades avanzadas. Esto hizo que ciertas tareas, como la recolección y el envío de datos, fueran complicadas de implementar de manera eficiente.
+   - El entorno de programación en **Python** y **JavaScript** en Cisco Packet Tracer es limitado, ya que las bibliotecas y funciones disponibles son muy básicas, lo que restringe la posibilidad de implementar funcionalidades avanzadas. Esto hizo que ciertas tareas, como la recolección y el envío de datos, fueran complicadas de implementar de manera eficiente. Aunque se pudo simular la transmisión de datos con Serial Monitor, no fue posible integrar un broker MQTT real dentro del simulador.
 
-
-
-
+A pesar de estas limitaciones, las simulaciones permitió validar la comunicación entre dispositivos y la activación de actuadores según las condiciones ambientales registradas por los sensores.
 
 ## 5. Conclusión
 
@@ -264,9 +284,6 @@ La implementación de un sistema automatizado de riego basado en IoT en el Viver
 El uso de Cisco Packet Tracer como herramienta de simulación ha sido esencial para validar los principios básicos de la arquitectura IoT propuesta antes de una implementación real. Si bien se enfrentaron desafíos, como la limitación de protocolos como Zigbee y MQTT, se logró una solución funcional adaptando las tecnologías disponibles, lo que resalta la flexibilidad y capacidad de adaptación del sistema.
 
 A pesar de las restricciones impuestas por la plataforma de simulación, la experiencia adquirida proporciona un sólido punto de partida para futuras implementaciones reales, donde la optimización del riego y el ahorro de recursos se convierten en factores clave para el éxito del vivero. Este sistema no solo mejora la eficiencia operativa, sino que también contribuye a la sostenibilidad del entorno, ofreciendo beneficios tanto a los productores como al medio ambiente.
-
-
-
 
 
 ## 6. Referencias
