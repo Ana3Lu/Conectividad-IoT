@@ -181,7 +181,7 @@ El sistema está compuesto por los siguientes elementos clave:
 A continuación se presenta el diagrama UML de actividades desarrollado en el sistema:
 
 ![UML de Actividades del sistema](DiagramaActSistema.png)
-*Figura 2: Diagrama UML de actividades de la propuesta.
+*Figura 2: Diagrama UML de actividades de la propuesta.*
 
 Este diagrama representa el flujo de funcionamiento del sistema IoT para la automatización de riego en un vivero. Se divide en tres módulos principales:
 	Flujo Principal: Configura el entorno de ejecución, establece la conexión con el MCU, inicializa sensores y espera la señal de inicio.
@@ -200,6 +200,7 @@ Para la implementación de la red IoT en Cisco Packet Tracer, fue necesario adap
 
 1. **Primera simulación (Conexión Directa con Wi-Fi e IoT Monitor)**
 ![Primera simulación PT](Simulacion1PT.jpg)
+*Figura 3: Topología de la primera simulación hecha en PT.*
 - Se implementó el código del MCU para leer valores de los sensores y controlar los actuadores de acuerdo con los valores recibidos.
 - **Configuración de la red Wi-Fi:**
   - Se utilizó un Home Gateway como punto de acceso Wi-Fi para conectar los dispositivos IoT.
@@ -217,7 +218,7 @@ Para la implementación de la red IoT en Cisco Packet Tracer, fue necesario adap
   - Aunque se logró la transmisión de datos, IoT Monitor no permitió un control avanzado del sistema.
   - La comunicación se limitó a Wi-Fi sin posibilidad de usar otros protocolos como MQTT.
 
-2. **Segunda simulación (Mostrado en la topología -> Implementación con SBC como Broker MQTT y Cliente)**
+2. **Segunda simulación (Mostrado en Fig. 1 -> Implementación con SBC como Broker MQTT y Cliente)**
 - **Mejoras en la arquitectura:**
   - Se hizo que el Single Board Computer (SBC), que simula una Raspberry Pi, actúe como broker y cliente MQTT.
 - Se reemplazó el IoT Monitor por una comunicación basada en MQTT.
