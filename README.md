@@ -61,7 +61,7 @@ El Producto Mínimo Viable (MVP) incorporará sensores de **humedad del suelo, t
 
 ## 3. Diseño del MVP y Tecnologías Seleccionadas
 
-### Arquitectura del sistema
+### Arquitectura propuesta
 <p align="justify">
 El Producto Mínimo Viable (MVP) propuesto se basa en una arquitectura IoT híbrida y distribuida, estructurada según los componentes fundamentales de un sistema IoT: percepción, computación, conectividad y analítica/visualización. Esta arquitectura integra sensores, microcontroladores, una Raspberry Pi como gateway y broker MQTT, actuadores y una interfaz de usuario. Asimismo, se seleccionó una combinación de tecnologías Zigbee y Wi-Fi/Ethernet para asegurar eficiencia energética, escalabilidad, estabilidad en la transmisión de datos y facilidad de mantenimiento dentro del vivero.  
 </p>
@@ -117,6 +117,19 @@ Otras opciones consideradas fueron HTTP y CoAP. Sin embargo, HTTP resulta demasi
 
 Por otro lado, CoAP es un protocolo más ligero que HTTP, pero no ofrece la misma flexibilidad ni compatibilidad con plataformas ya existentes. Además, MQTT supera a ambos en optimización de throughput, eficiencia energética y manejo de conexiones intermitentes, gracias a características como QoS, retención de mensajes y el mecanismo de Última Voluntad (LWT) [7].
 </p>
+
+### Criterios de Diseño 
+Para que el sistema trabaje como lo esperado, se establecieron los siguientes criterios de diseño:
+- **Eficiencia Energética:** Minimizar el consumo energético en sensores y microcontroladores mediante tecnologías de bajo consumo como Zigbee y Wi-Fi.
+- **Escalabilidad:** Facilitar la expansión del sistema con nuevos sensores y actuadores sin cambiar la infraestructura.
+- **Fiabilidad:** Garantizar una comunicación estable mediante Zigbee y MQTT, incluso en condiciones variables.
+- **Facilidad de Implementación y Mantenimiento:** Uso de plataformas comunes (como Raspberry Pi) y una interfaz web intuitiva para fácil gestión.
+- **Optimización de Recursos:** Control automático del riego según las condiciones del suelo, reduciendo el desperdicio de agua.
+- **Interfaz Accesible:** Dashboard web para monitoreo y control remoto del sistema.
+- **Seguridad de Datos:** Cifrado y autenticación en las comunicaciones para proteger la información.
+- **Reducción de Costos:** Uso de componentes económicos y eficiencia en el consumo de energía y agua.
+- **Resiliencia:** Capacidad de recuperación ante fallos en la red o dispositivos para mantener el funcionamiento.
+- **Compatibilidad con Simulación:** Adaptación a Cisco Packet Tracer para validar la solución antes de la implementación real.
 
 ### Funcionamiento del MVP
 
