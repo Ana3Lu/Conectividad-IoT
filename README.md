@@ -220,9 +220,9 @@ A continuación, se presentan los componentes utilizados y su función en la sim
 | *Componente*              | *Dispositivo en Packet Tracer*          | *Función* |
 |-----------------------------|---------------------------------|------------|
 | *Sensores IoT*  | *IoT Temperature, Humidity sensor, pH sensor* | Miden condiciones del ambiente y del suelo. |
-| *Microcontrolador (ESP32/Arduino)* | *MCU* | Recibe los datos de los sensores y pretende transmitirla a la Raspberry Pi (SBC). |
-| *Coordinador/Gateway (Raspberry Pi)* | *Single Board Computer (SBC)* | Recibe datos del MCU y los gestiona mediante MQTT. |
-| *Servidor/Dashboard* | *Server con Web Server activado* | Procesa y muestra los datos del vivero. |
+| *Microcontrolador (ESP32/Arduino)* | *MCU* | Recibe los datos de los sensores y pretende transmitirla a la Raspberry Pi (SBC). En este caso, directamente se encarga de la lógica y automatización del riego |
+| *Coordinador/Gateway (Raspberry Pi)* | *Single Board Computer (SBC)* | "Recibe" datos del MCU y los gestiona mediante MQTT (segunda simulación). |
+| *Laptop* | *Laptop* | Recibe y visualiza los datos de los sensores del vivero. |
 | *Red Wi-Fi* | *Home Gateway (Router Wi-Fi)* | Conecta todos los dispositivos a la red. |
 | *Actuadores (Aspersores y ventiladores)* | *IoT Water Sprinkler, IoT Fan* | Se activa según condiciones del ambiente. |
 
